@@ -1,0 +1,13 @@
+steamcmd
+rust_server
+server_files
+select_version.bat
+start_server.bat
+update_oxide.bat
+.dll
+.exe
+.old
+.delete
+.txt
+.vdf
+.manifest
