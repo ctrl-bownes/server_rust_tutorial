@@ -30,7 +30,7 @@ steamcmd +runscript rust_install.txt
 
 cd ../rust_server/
 
-echo :: Double colons are used to add comments in a batch file.>> start_server.bat
+echo :: Double colons are used to add comments in a batch file.> start_server.bat
 echo :: Anything on a line starting with :: is ignored when the batch file runs.>> start_server.bat
 echo.>> start_server.bat
 echo :: You can use comments to disable commands you don't want to execute.>> start_server.bat
