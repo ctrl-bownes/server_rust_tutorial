@@ -9,10 +9,7 @@ https://github.com/ctrl-bownes/server_rust_tutorial/releases
 
 Extract the .zip you downloaded.
 
-Start the batch file ``setup.bat`
-```text
-setup.bat
-```
+Start the batch file `setup.bat`
 
 The setup script will prepare the guide and automatically open it in your browser.
 
