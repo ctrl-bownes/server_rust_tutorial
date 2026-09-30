@@ -558,9 +558,10 @@
 								oxide is installed, and make sure to <strong>boot</strong> the server once
 								with oxide installed, oxide will then generate it's own
 								files.</li>
-								<li>Some plugins require additional configuration files,
-								permissions or other plugins. Always check the plugin's
-								instructions before installing it.</li>
+								<li>Some plugins require additional configuration files 
+								or other plugins. Always check the plugin's	instructions 
+								before installing it.</li>
+								<li>Some plugins require permissions. <a style="text-decoration: none; color: rgb(111, 177, 188);" href="#commands-oxide">click here to see commands to give those permissions.</a></li>
 							</ul>
 						</div>
 						<br>
@@ -576,11 +577,13 @@
 								For example this <strong><a target="_blank" style="text-decoration: none; color: rgb(111, 177, 188);" href="https://umod.org/plugins/workshop-skin-viewer">plugin</a></strong>
 								allow you to import skins directly from the workshop.<br><br>
 							</span>
-							<img
-								class="step-image"
-								src="images/console.png"
-								alt="Rust F1 console"
-							>
+							<div>
+								<img
+									style="width: 100%;"
+									src="images/umod-plugin.png"
+									alt="Rust F1 console"
+								>
+							</div>
 						</div>
 						<br>
 						<ol class="steps">
@@ -609,7 +612,7 @@
 							</li>
 
 							<li class="step">
-								<h3>Start or restart the server</h3>
+								<h3>Start the server</h3>
 								<div class="description">
 									Oxide automatically detects the plugin and loads it.
 								</div>
@@ -627,8 +630,11 @@
 
 						<div class="notice info">
 							<strong>Plugin folder:</strong>
-							<code>rust_server/server_files/oxide/plugins/</code>
+							<code>rust_server/server_files/oxide/plugins/</code><br>
+							<strong>Tips:</strong> When importing a plugin, there is no need to restart or stop
+							the server, it can be running. Oxide will automatically load the plugin.
 						</div>
+						<a href="#commands-oxide" style="text-decoration: none; color: rgb(111, 177, 188);">Click here for some useful commands.</a>
 					</div>
 				</div>
 
@@ -1091,6 +1097,39 @@ RustDedicated.exe ^
 			</div>
 		</section>
 	</div>
+	<footer id="footer">
+		<div class="footer-inner">
+
+			<div class="footer-main">
+				<div class="footer-brand">
+					<i data-lucide="server" class="footer-icon"></i>
+					<div>
+						<strong>Rust Server Guide</strong>
+						<p>Guide for setting up a small Rust dedicated server.</p>
+					</div>
+				</div>
+
+				<div class="footer-links">
+					<a href="#setup">Setup</a>
+					<a href="#start">Start</a>
+					<a href="#commands">Commands</a>
+					<a href="#config">Configuration</a>
+					<a href="#files">Server files</a>
+				</div>
+			</div>
+
+			<div class="footer-note">
+				This is an independent community project and is not affiliated with
+				or endorsed by Facepunch Studios or Rust.
+			</div>
+
+			<div class="footer-bottom">
+				<span>© 2026 Rust Server Guide</span>
+				<span>No account · No personal data collection</span>
+			</div>
+
+		</div>
+	</footer>
 	<script src="https://unpkg.com/lucide@latest"></script>
 	<script src="script.js"></script>
 </body>
