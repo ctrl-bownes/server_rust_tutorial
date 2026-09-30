@@ -7,13 +7,13 @@ A simple guide to help you set up and manage your own small **Rust dedicated ser
 Downloads:
 https://github.com/ctrl-bownes/server_rust_tutorial/releases
 
-Extract the .zip you downloaded.
+Extract the `.zip` you downloaded.
 
 Start the batch file `setup.bat`
 
 The setup script will prepare the guide and automatically open it in your browser.
 
-You can also open the guide manually:
+You can also open the guide manually via this route:
 
 ```text
 guide/open_me.html
