@@ -6,159 +6,113 @@
 	<title>Rust Server Guide</title>
 	<link rel="stylesheet" href="./stylesheet.css">
 </head>
+
 <body>
-<!------- NAVBAR ------->
-<nav>
-	<div class="inner">
-		<a href="#setup">
-			<i data-lucide="download" class="nav-icon"></i>
-			<span>1. Setup</span>
-		</a>
-		<a href="#start">
-			<i data-lucide="play" class="nav-icon"></i>
-			<span>2. Start</span>
-		</a>
-		<a href="#commands">
-			<i data-lucide="terminal" class="nav-icon"></i>
-			<span>3. Commands</span>
-		</a>
-		<a href="#config">
-			<i data-lucide="settings" class="nav-icon"></i>
-			<span>4. Configuration</span>
-		</a>
-		<a href="#files">
-			<i data-lucide="folder" class="nav-icon"></i>
-			<span>5. Files</span>
-		</a>
-	</div>
-</nav>
-
-<div class="container">
-	<header id="top">
-		<h1>Rust Server Guide</h1>
-		<div class="subtitle">
-			Install, start and configure your own Rust dedicated server on Windows.
+	<!-- Navbar -->
+	<nav>
+		<div class="inner">
+			<a href="#setup">
+				<i data-lucide="download" class="nav-icon"></i>
+				<span>1. Setup</span>
+			</a>
+			<a href="#start">
+				<i data-lucide="play" class="nav-icon"></i>
+				<span>2. Start</span>
+			</a>
+			<a href="#commands">
+				<i data-lucide="terminal" class="nav-icon"></i>
+				<span>3. Commands</span>
+			</a>
+			<a href="#config">
+				<i data-lucide="settings" class="nav-icon"></i>
+				<span>4. Configuration</span>
+			</a>
+			<a href="#files">
+				<i data-lucide="folder" class="nav-icon"></i>
+				<span>5. Files</span>
+			</a>
 		</div>
-	</header>
+	</nav>
 
-
-
-<!-- =====================================================
-	CHAPTER 1
-	===================================================== -->
-
-<section class="chapter" id="setup">
-
-<h2>
-	<span class="num">1</span>
-	<i data-lucide="download" class="chapter-icon"></i>
-	Setup
-</h2>
-
-
-<div class="chapter-content">
-
-	<p class="intro">
-	Everything is installed automatically by
-	<code>setup.bat</code>. You only have to run it once.
-	</p>
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="setup-install">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="package"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Install the server</h3>
-
-		<p>
-			Download SteamCMD and the Rust dedicated server files.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<ol class="steps">
-
-		<li class="step">
-
-			<h3>Run <code>setup.bat</code></h3>
-
-		</li>
-
-
-		<li class="step">
-
-			<h3>Wait for the download to finish</h3>
-
-			<div class="description">
-			The script downloads <strong>SteamCMD</strong> and the
-			<strong>Rust dedicated server</strong> files.
-			This can take a while.
-			<strong>Do not close the window.</strong>
+	<div class="container">
+		<header id="top">
+			<h1>Rust Server Guide</h1>
+			<div class="subtitle">
+				Install, start and configure your own Rust dedicated server on Windows.
 			</div>
+		</header>
 
-		</li>
+		<!-- Chapter 1 -->
+		<section class="chapter" id="setup">
+			<h2>
+				<span class="num">1</span>
+				<i data-lucide="download" class="chapter-icon"></i>
+				Setup
+			</h2>
 
+			<div class="chapter-content">
+				<p class="intro">
+					Everything is installed automatically by
+					<code>setup.bat</code>. You only have to run it once.
+				</p>
 
-		<li class="step">
+				<!-- Install -->
+				<div class="sub-section" id="setup-install">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="package"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Install the server</h3>
+							<p>Download SteamCMD and the Rust dedicated server files.</p>
+						</div>
+					</div>
 
-			<h3>Wait for &laquo;Setup finished!&raquo;</h3>
+					<div class="sub-body">
+						<ol class="steps">
+							<li class="step">
+								<h3>Run <code>setup.bat</code></h3>
+							</li>
 
-			<div class="description">
-			When you see <code>Setup finished!</code>,
-			press any key to close the window.
-			Your server is now installed.
-			</div>
+							<li class="step">
+								<h3>Wait for the download to finish</h3>
+								<div class="description">
+									The script downloads <strong>SteamCMD</strong> and the
+									<strong>Rust dedicated server</strong> files.
+									This can take a while.
+									<strong>Do not close the window.</strong>
+								</div>
+							</li>
 
-		</li>
+							<li class="step">
+								<h3>Wait for &laquo;Setup finished!&raquo;</h3>
+								<div class="description">
+									When you see <code>Setup finished!</code>,
+									press any key to close the window.
+									Your server is now installed.
+								</div>
+							</li>
+						</ol>
+					</div>
+				</div>
 
-		</ol>
+				<!-- Files -->
+				<div class="sub-section" id="setup-files">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="folder-tree"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Check the installed files</h3>
+							<p>
+								Your batch files are stored inside
+								<code>rust_server</code>.
+							</p>
+						</div>
+					</div>
 
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="setup-files">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="folder-tree"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Check the installed files</h3>
-
-		<p>
-			Your batch files are stored inside
-			<code>rust_server</code>.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<pre class="tree">RustServer/
+					<div class="sub-body">
+						<pre class="tree">RustServer/
 ├── setup.bat
 ├── steamcmd/
 └── <span style="color: red;">rust_server/</span>
@@ -167,1058 +121,597 @@
 	├── select_version.bat
 	└── server_files/</pre>
 
+						<div class="notice info">
+							<strong>Good to know:</strong>
+							setup.bat only installs the vanilla Rust server.
 
-		<div class="notice info">
+							<strong>Oxide</strong> can be installed later with
+							<code>update_oxide.bat</code>.
 
-		<strong>Good to know:</strong>
-		setup.bat only installs the vanilla Rust server.
-
-		<strong>Oxide</strong> can be installed later with
-		<code>update_oxide.bat</code>.
-
-		See <a class="link" href="#config-oxide">Chapter 4 → Oxide</a>
-		for more information.
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-	<a class="back" href="#top">
-	<i data-lucide="arrow-up" class="icon-small"></i>
-	Back to top
-	</a>
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-	CHAPTER 2
-	===================================================== -->
-
-<section class="chapter" id="start">
-
-<h2>
-	<span class="num">2</span>
-	<i data-lucide="play" class="chapter-icon"></i>
-	Start the server
-</h2>
-
-
-<div class="chapter-content">
-
-	<p class="intro">
-	Once the setup is finished, choose how you want to continue.
-	</p>
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="start-choice">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="route"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Choose how to continue</h3>
-
-		<p>
-			You can start immediately or configure the server first.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="choices">
-
-		<a class="choice" href="#start-now">
-
-			<div class="choice-icon">
-			<i data-lucide="play"></i>
+							See <a class="link" href="#config-oxide">Chapter 4 → Oxide</a>
+							for more information.
+						</div>
+					</div>
+				</div>
 			</div>
+		</section>
 
-			<div>
+		<!-- Chapter 2 -->
+		<section class="chapter" id="start">
+			<h2>
+				<span class="num">2</span>
+				<i data-lucide="play" class="chapter-icon"></i>
+				Start the server
+			</h2>
 
-			<div class="tag">Option A</div>
+			<div class="chapter-content">
+				<p class="intro">
+					Once the setup is finished, choose how you want to continue.
+				</p>
 
-			<h3>Start right away</h3>
+				<!-- Choice -->
+				<div class="sub-section" id="start-choice">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="route"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Choose how to continue</h3>
+							<p>You can start immediately or configure the server first.</p>
+						</div>
+					</div>
 
-			<p>
-				Launch <code>start_server.bat</code>
-				with the default settings.
-			</p>
+					<div class="sub-body">
+						<div class="choices">
+							<a class="choice" href="#start-now">
+								<div class="choice-icon">
+									<i data-lucide="play"></i>
+								</div>
+								<div>
+									<div class="tag">Option A</div>
+									<h3>Start right away</h3>
+									<p>
+										Launch <code>start_server.bat</code>
+										with the default settings.
+									</p>
+								</div>
+							</a>
 
+							<a class="choice" href="#config">
+								<div class="choice-icon">
+									<i data-lucide="settings"></i>
+								</div>
+								<div>
+									<div class="tag">Option B</div>
+									<h3>Configure first</h3>
+									<p>
+										Install Oxide, choose a version or
+										customize the map before launching.
+									</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- Start -->
+				<div class="sub-section" id="start-now">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="server"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Start the server</h3>
+							<p>Launch the server and wait until it finishes loading.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<ol class="steps">
+							<li class="step">
+								<h3>Open the <code>rust_server</code> folder</h3>
+								<div class="description">
+									Double-click <strong>start_server.bat</strong>.
+								</div>
+							</li>
+
+							<li class="step">
+								<h3>Wait for the server to load</h3>
+								<div class="description">
+									A console window opens and generates the map
+									on the first launch.
+
+									This can take a few minutes.
+
+									<br><br>
+
+									<strong>Keep this window open</strong>:
+									closing it stops the server.
+								</div>
+							</li>
+						</ol>
+					</div>
+				</div>
+
+				<!-- Connect -->
+				<div class="sub-section" id="start-connect">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="log-in"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Connect to your server</h3>
+							<p>Connect locally using the Rust F1 console.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="description">
+							Launch Rust or Rust Staging depending on the
+							version you installed.
+
+							Press <strong>F1</strong> to open the game console
+							and enter:
+						</div>
+
+						<div class="command-box">
+							<code>client.connect localhost</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Admin -->
+				<div class="sub-section" id="start-admin">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="shield"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Make yourself admin</h3>
+							<p>Give your player server administrator permissions.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="description">
+							Go to
+							<a class="link" href="#commands">
+								Chapter 3 → Commands
+							</a>
+							to configure your SteamID and admin commands.
+						</div>
+					</div>
+				</div>
 			</div>
+		</section>
 
-		</a>
+		<!-- Chapter 3 -->
+		<section class="chapter" id="commands">
+			<h2>
+				<span class="num">3</span>
+				<i data-lucide="terminal" class="chapter-icon"></i>
+				Commands
+			</h2>
 
+			<div class="chapter-content">
+				<p class="intro">
+					Fill in your information once, then copy the generated commands.
+				</p>
 
-		<a class="choice" href="#config">
+				<!-- Player -->
+				<div class="sub-section" id="commands-player">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="user"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Player information</h3>
+							<p>
+								Enter the Steam information used by the commands below.
+							</p>
+						</div>
+					</div>
 
-			<div class="choice-icon">
-			<i data-lucide="settings"></i>
+					<div class="sub-body">
+						<div class="input-row">
+							<div class="input-group">
+								<label>SteamID64 (17-digit number)</label>
+								<input id="steamId" type="text" placeholder="YOUR_STEAMID64" oninput="updateCommands()">
+							</div>
+
+							<div class="input-group">
+								<label>Steam username</label>
+								<input id="username" type="text" placeholder="YOUR_STEAM_USERNAME" oninput="updateCommands()">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Admin -->
+				<div class="sub-section" id="commands-admin">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="shield-check"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Server administrator</h3>
+							<p>Give yourself Rust server administrator permissions.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="notice info">
+							Some commands require privileges.
+
+							If you cannot execute them from the game console,
+							use the <code>server console</code>.
+						</div>
+
+						<div class="description">
+							Run this command with your SteamID and username:
+						</div>
+
+						<div class="command-box">
+							<code id="ownerCommand">ownerid YOUR_STEAMID64 YOUR_STEAM_USERNAME</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+
+						<div class="sub-label">
+							<i data-lucide="save" class="icon-small"></i>
+							Save the change
+						</div>
+
+						<div class="description">
+							Run this afterwards so the admin list is kept after a restart.
+						</div>
+
+						<div class="command-box">
+							<code>server.writecfg</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Oxide -->
+				<div class="sub-section" id="commands-oxide">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="puzzle"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Oxide commands</h3>
+							<p>Check Oxide and configure its administrator group.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="card">
+							<h3>Check if Oxide is installed</h3>
+							<div class="description">
+								If the command is unknown, Oxide is not installed yet.
+							</div>
+							<div class="command-box">
+								<code>oxide.version</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>Grant access to the admin group</h3>
+							<div class="description">
+								Give the Oxide admin group access to every permission.
+							</div>
+							<div class="command-box">
+								<code>oxide.grant group admin *</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+						</div>
+
+						<div class="card">
+							<h3>Grant all permission to a User</h3>
+							<div class="description">
+								Give the Oxide User access to every permission.
+							</div>
+							<div class="command-box">
+								<code id="oxideUserGrantCommand">oxide.grant user YOUR_STEAM_USERNAME *</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+						</div>
+
+						<div class="card" style="margin-bottom:0;">
+							<h3>Add yourself to the admin group</h3>
+							<div class="description">
+								Add the player from the information above
+								to the Oxide admin group.
+							</div>
+							<div class="command-box">
+								<code id="oxideGroupGrantCommand">oxide.usergroup add YOUR_STEAM_USERNAME admin</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-
-			<div>
-
-			<div class="tag">Option B</div>
-
-			<h3>Configure first</h3>
-
-			<p>
-				Install Oxide, choose a version or
-				customize the map before launching.
-			</p>
-
-			</div>
-
-		</a>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="start-now">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="server"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Start the server</h3>
-
-		<p>
-			Launch the server and wait until it finishes loading.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<ol class="steps">
-
-		<li class="step">
-
-			<h3>Open the <code>rust_server</code> folder</h3>
-
-			<div class="description">
-			Double-click <strong>start_server.bat</strong>.
-			</div>
-
-		</li>
-
-
-		<li class="step">
-
-			<h3>Wait for the server to load</h3>
-
-			<div class="description">
-			A console window opens and generates the map
-			on the first launch.
-
-			This can take a few minutes.
-
-			<br><br>
-
-			<strong>Keep this window open</strong>:
-			closing it stops the server.
-			</div>
-
-		</li>
-
-		</ol>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="start-connect">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="log-in"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Connect to your server</h3>
-
-		<p>
-			Connect locally using the Rust F1 console.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="description">
-		Launch Rust or Rust Staging depending on the
-		version you installed.
-
-		Press <strong>F1</strong> to open the game console
-		and enter:
-		</div>
-
-
-		<div class="command-box">
-
-		<code>client.connect localhost</code>
-
-		<button onclick="copyCommand(this)">
-			COPY
-		</button>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="start-admin">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="shield"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Make yourself admin</h3>
-
-		<p>
-			Give your player server administrator permissions.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="description">
-
-		Go to
-		<a class="link" href="#commands">
-			Chapter 3 → Commands
-		</a>
-		to configure your SteamID and admin commands.
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-	<a class="back" href="#top">
-	<i data-lucide="arrow-up" class="icon-small"></i>
-	Back to top
-	</a>
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-	CHAPTER 3
-	===================================================== -->
-
-<section class="chapter" id="commands">
-
-<h2>
-	<span class="num">3</span>
-	<i data-lucide="terminal" class="chapter-icon"></i>
-	Commands
-</h2>
-
-
-<div class="chapter-content">
-
-	<p class="intro">
-	Fill in your information once, then copy the generated commands.
-	</p>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="commands-player">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="user"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Player information</h3>
-
-		<p>
-			Enter the Steam information used by the commands below.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="input-row">
-
-		<div class="input-group">
-
-			<label>SteamID64 (17-digit number)</label>
-
-			<input
-			id="steamId"
-			type="text"
-			placeholder="YOUR_STEAMID64"
-			oninput="updateCommands()">
-
-		</div>
-
-
-		<div class="input-group">
-
-			<label>Steam username</label>
-
-			<input
-			id="username"
-			type="text"
-			placeholder="YOUR_STEAM_USERNAME"
-			oninput="updateCommands()">
-
-		</div>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="commands-admin">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="shield-check"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Server administrator</h3>
-
-		<p>
-			Give yourself Rust server administrator permissions.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="notice info">
-
-		Some commands require privileges.
-
-		If you cannot execute them from the game console,
-		use the <code>server console</code>.
-
-		</div>
-
-
-		<div class="description">
-		Run this command with your SteamID and username:
-		</div>
-
-
-		<div class="command-box">
-
-		<code id="ownerCommand">ownerid YOUR_STEAMID64 YOUR_STEAM_USERNAME</code>
-
-		<button onclick="copyCommand(this)">
-			COPY
-		</button>
-
-		</div>
-
-
-		<div class="sub-label">
-		<i data-lucide="save" class="icon-small"></i>
-		Save the change
-		</div>
-
-
-		<div class="description">
-		Run this afterwards so the admin list is kept after a restart.
-		</div>
-
-
-		<div class="command-box">
-
-		<code>server.writecfg</code>
-
-		<button onclick="copyCommand(this)">
-			COPY
-		</button>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="commands-oxide">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="puzzle"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Oxide commands</h3>
-
-		<p>
-			Check Oxide and configure its administrator group.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="card">
-
-		<h3>Check if Oxide is installed</h3>
-
-		<div class="description">
-			If the command is unknown, Oxide is not installed yet.
-		</div>
-
-		<div class="command-box">
-
-			<code>oxide.version</code>
-
-			<button onclick="copyCommand(this)">
-			COPY
-			</button>
-
-		</div>
-
-		</div>
-
-
-		<div class="card">
-
-		<h3>Grant access to the admin group</h3>
-
-		<div class="description">
-			Give the Oxide admin group access to every permission.
-		</div>
-
-		<div class="command-box">
-
-			<code>oxide.grant group admin *</code>
-
-			<button onclick="copyCommand(this)">
-			COPY
-			</button>
-
-		</div>
-
-		</div>
-
-		<div class="card">
-
-		<h3>Grant all permission to a User</h3>
-
-		<div class="description">
-			Give the Oxide User access to every permission.
-		</div>
-
-		<div class="command-box">
-
-			<code id="oxideUserGrantCommand">oxide.grant user YOUR_STEAM_USERNAME *</code>
-
-			<button onclick="copyCommand(this)">
-			COPY
-			</button>
-
-		</div>
-
-		</div>
-
-
-		<div class="card" style="margin-bottom:0;">
-
-		<h3>Add yourself to the admin group</h3>
-
-		<div class="description">
-			Add the player from the information above
-			to the Oxide admin group.
-		</div>
-
-		<div class="command-box">
-
-			<code id="oxideGroupGrantCommand">oxide.usergroup add YOUR_STEAM_USERNAME admin</code>
-
-			<button onclick="copyCommand(this)">
-			COPY
-			</button>
-
-		</div>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-	<a class="back" href="#top">
-	<i data-lucide="arrow-up" class="icon-small"></i>
-	Back to top
-	</a>
-
-</div>
-
-</section>
-
-
-
-<!-- =====================================================
-	CHAPTER 4
-	===================================================== -->
-
-<section class="chapter" id="config">
-
-<h2>
-	<span class="num">4</span>
-	<i data-lucide="settings" class="chapter-icon"></i>
-	Further configuration
-</h2>
-
-
-<div class="chapter-content">
-
-	<p class="intro">
-	Configure your server after the basic installation.
-	Choose what you want to change below.
-	</p>
-
-
-	<!-- CONFIGURATION OVERVIEW -->
-
-	<div class="config-overview">
-
-	<div class="config-overview-title">
-
-		<span>Configuration</span>
-
-		<small>
-		Choose what you want to change
-		</small>
-
-	</div>
-
-
-	<div class="config-overview-grid">
-
-		<a class="config-nav-card" href="#config-oxide">
-
-		<span class="config-nav-number">01</span>
-
-		<div>
-
-			<strong>Install Oxide</strong>
-
-			<p>
-			Use plugins and server modifications.
-			</p>
-
-		</div>
-
-		</a>
-
-
-		<a class="config-nav-card" href="#config-version">
-
-		<span class="config-nav-number">02</span>
-
-		<div>
-
-			<strong>Choose a version</strong>
-
-			<p>
-			Switch between Rust branches.
-			</p>
-
-		</div>
-
-		</a>
-
-
-		<a class="config-nav-card" href="#config-start">
-
-		<span class="config-nav-number">03</span>
-
-		<div>
-
-			<strong>Server settings</strong>
-
-			<p>
-			Change the map and startup settings.
-			</p>
-
-		</div>
-
-		</a>
-
-	</div>
-
-	</div>
-
-
-	<div class="notice">
-
-	<strong>Before changing anything:</strong>
-
-	Stop the server first.
-
-	Close the server console or type <code>quit</code>.
-
-	</div>
-
-
-
-	<!-- OXIDE -->
-
-	<div class="sub-section" id="config-oxide">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="puzzle"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Install or update Oxide</h3>
-
-		<p>
-			Install the modding framework required for Rust plugins.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="config-purpose">
-
-		<strong>What is Oxide?</strong>
-
-		<span>
-			Oxide (uMod) is the modding framework used
-			to run Rust plugins.
-
-			If you only want a completely vanilla server,
-			you do not need it.
-		</span>
-
-		</div>
-
-
-		<ol class="steps">
-
-		<li class="step">
-
-			<h3>Stop the server</h3>
-
-			<div class="description">
-			Close the server console or type <code>quit</code>.
-			</div>
-
-		</li>
-
-
-		<li class="step">
-
-			<h3>Run <code>update_oxide.bat</code></h3>
-
-			<div class="description">
-			Double-click the file inside your
-			<code>rust_server</code> folder.
-			</div>
-
-		</li>
-
-
-		<li class="step">
-
-			<h3>Wait for the update to finish</h3>
-
-			<div class="description">
-			Wait until the script reports:
-			<code>Oxide update finished successfully.</code>
-			</div>
-
-		</li>
-
-
-		<li class="step">
-
-			<h3>Start the server again</h3>
-
-			<div class="description">
-			Launch <code>start_server.bat</code>
-			and verify the installation with
-			<code>oxide.version</code>.
-			</div>
-
-		</li>
-
-		</ol>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- VERSION -->
-
-	<div class="sub-section" id="config-version">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="git-branch"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Choose the Rust version</h3>
-
-		<p>
-			Switch between the Main, Staging and Beta branches.
-		</p>
-
-		</div>
-
-	</div>
-
-	
-
-	<div class="sub-body">
-
-		
-		<div class="config-action">
-
-		<div class="config-action-title">
-
-			<span>How to change the version</span>
-
-			<small>3 steps</small>
-
-		</div>
-
-
-		<div class="action-steps">
-
-			<div>
-			<b>1</b>
-			<span>Stop the server.</span>
-			</div>
-
-			<div>
-			<b>2</b>
-			<span>Run <code>select_version.bat</code>.</span>
-			</div>
-
-			<div>
-			<b>3</b>
-			<span>Select the branch and wait for SteamCMD.</span>
-			</div>
-
-		</div>
-
-		</div>
-		<br>
-
-		<div>Branches:</div>
-		<div class="version-list">            
-
-		<div class="version-card version-main">
-
-			<div class="version-top">
-
-			<span class="version-number">1</span>
-
-			<div class="version-name">
-
-				<strong>Main</strong>
-
-				<span class="version-badge">
-				PUBLIC
-				</span>
-
-			</div>
-
-			</div>
-
-			<p>
-			The normal public Rust version.
-			This is the standard choice for a regular server.
-			</p>
-
-			<div class="version-note">
-			Works with Oxide.
-			</div>
-
-		</div>
-
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">2</span>
-
-			<div class="version-name">
-
-				<strong>Staging</strong>
-
-				<span class="version-badge">
-				TESTING
-				</span>
-
-			</div>
-
-			</div>
-
-			<p>
-			The upcoming Rust version used for testing
-			before changes reach the public branch.
-			</p>
-
-			<div class="version-note warning">
-			May not work with Oxide.
-			</div>
-
-		</div>
-
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">3</span>
-
-			<div class="version-name">
-
-				<strong>Public Beta</strong>
-
-				<span class="version-badge">
-				BETA
-				</span>
-
-			</div>
-
-			</div>
-
-			<p>
-			Enter the name of a public beta branch
-			when prompted by the script.
-			</p>
-
-			<div class="version-note warning">
-			May not work with Oxide.
-			</div>
-
-		</div>
-
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">4</span>
-
-			<div class="version-name">
-
-				<strong>Private Beta</strong>
-
-				<span class="version-badge">
-				BETA
-				</span>
-
-			</div>
-
-			</div>
-
-			<p>
-			Enter the branch name and its password
-			when prompted by the script.
-			</p>
-
-			<div class="version-note warning">
-			May not work with Oxide.
-			</div>
-
-		</div>
-
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">5</span>
-
-			<div class="version-name">
-
-				<strong>Exit</strong>
-
-			</div>
-
-			</div>
-
-			<p>
-			Close the menu without changing anything.
-			</p>
-
-		</div>
-
-
-		</div>
-
-		<div class="notice">
-
-		<strong>Important:</strong>
-
-		If you change the Rust version,
-		run <code>update_oxide.bat</code> again afterwards.
-
-		Changing branches can overwrite Oxide files.
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SERVER SETTINGS -->
-
-	<div class="sub-section" id="config-start">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="sliders-horizontal"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Server settings</h3>
-
-		<p>
-			Change how the server starts and which map it loads.
-		</p>
-
-		</div>
-
-	</div>
-
-	<div class="sub-body">
-
-	<div class="config-purpose">
-		<span>
-		For this, you will need to edit your <code>start_server.bat</code> file.
-		</span>
-	</div>
-
-	<br>
-
-	<div class="setting-block custom-map">
-
-		<div class="setting-header">
-		<div>
-			<span class="setting-label">STARTUP CONFIGURATION</span>
-		</div>
-		<span class="setting-custom">EDIT</span>
-		</div>
-
-		<div class="code-label">
-		Your <code>start_server.bat</code> should look like this:
-		</div>
-
-		<div class="command-box">
-		<code>@echo off
+		</section>
+
+		<!-- Chapter 4 -->
+		<section class="chapter" id="config">
+			<h2>
+				<span class="num">4</span>
+				<i data-lucide="settings" class="chapter-icon"></i>
+				Further configuration
+			</h2>
+
+			<div class="chapter-content">
+				<p class="intro">
+					Configure your server after the basic installation.
+					Choose what you want to change below.
+				</p>
+
+				<!-- Configuration overview -->
+				<div class="config-overview">
+					<div class="config-overview-title">
+						<span>Configuration</span>
+						<small>Choose what you want to change</small>
+					</div>
+
+					<div class="config-overview-grid">
+						<a class="config-nav-card" href="#config-oxide">
+							<span class="config-nav-number">01</span>
+							<div>
+								<strong>Install Oxide</strong>
+								<p>Use plugins and server modifications.</p>
+							</div>
+						</a>
+
+						<a class="config-nav-card" href="#config-version">
+							<span class="config-nav-number">02</span>
+							<div>
+								<strong>Choose a version</strong>
+								<p>Switch between Rust branches.</p>
+							</div>
+						</a>
+
+						<a class="config-nav-card" href="#config-start">
+							<span class="config-nav-number">03</span>
+							<div>
+								<strong>Server settings</strong>
+								<p>Change the map and startup settings.</p>
+							</div>
+						</a>
+					</div>
+				</div>
+
+				<div class="notice">
+					<strong>Before changing anything:</strong>
+					Stop the server first.
+
+					Close the server console or type <code>quit</code>.
+				</div>
+
+				<!-- Oxide -->
+				<div class="sub-section" id="config-oxide">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="puzzle"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Install or update Oxide</h3>
+							<p>
+								Install the modding framework required for Rust plugins.
+							</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="config-purpose">
+							<strong>What is Oxide?</strong>
+							<span>
+								Oxide (uMod) is the modding framework used
+								to run Rust plugins.
+
+								If you only want a completely vanilla server,
+								you do not need it.
+							</span>
+						</div>
+
+						<ol class="steps">
+							<li class="step">
+								<h3>Stop the server</h3>
+								<div class="description">
+									Close the server console or type <code>quit</code>.
+								</div>
+							</li>
+
+							<li class="step">
+								<h3>Run <code>update_oxide.bat</code></h3>
+								<div class="description">
+									Double-click the file inside your
+									<code>rust_server</code> folder.
+								</div>
+							</li>
+
+							<li class="step">
+								<h3>Wait for the update to finish</h3>
+								<div class="description">
+									Wait until the script reports:
+									<code>Oxide update finished successfully.</code>
+								</div>
+							</li>
+
+							<li class="step">
+								<h3>Start the server again</h3>
+								<div class="description">
+									Launch <code>start_server.bat</code>
+									and verify the installation with
+									<code>oxide.version</code>.
+								</div>
+							</li>
+						</ol>
+					</div>
+				</div>
+
+				<!-- Version -->
+				<div class="sub-section" id="config-version">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="git-branch"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Choose the Rust version</h3>
+							<p>
+								Switch between the Main, Staging and Beta branches.
+							</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="config-action">
+							<div class="config-action-title">
+								<span>How to change the version</span>
+								<small>3 steps</small>
+							</div>
+
+							<div class="action-steps">
+								<div>
+									<b>1</b>
+									<span>Stop the server.</span>
+								</div>
+								<div>
+									<b>2</b>
+									<span>Run <code>select_version.bat</code>.</span>
+								</div>
+								<div>
+									<b>3</b>
+									<span>Select the branch and wait for SteamCMD.</span>
+								</div>
+							</div>
+						</div>
+
+						<br>
+
+						<div>Branches:</div>
+
+						<div class="version-list">
+							<div class="version-card version-main">
+								<div class="version-top">
+									<span class="version-number">1</span>
+									<div class="version-name">
+										<strong>Main</strong>
+										<span class="version-badge">PUBLIC</span>
+									</div>
+								</div>
+								<p>
+									The normal public Rust version.
+									This is the standard choice for a regular server.
+								</p>
+								<div class="version-note">Works with Oxide.</div>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">2</span>
+									<div class="version-name">
+										<strong>Staging</strong>
+										<span class="version-badge">TESTING</span>
+									</div>
+								</div>
+								<p>
+									The upcoming Rust version used for testing
+									before changes reach the public branch.
+								</p>
+								<div class="version-note warning">May not work with Oxide.</div>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">3</span>
+									<div class="version-name">
+										<strong>Public Beta</strong>
+										<span class="version-badge">BETA</span>
+									</div>
+								</div>
+								<p>
+									Enter the name of a public beta branch
+									when prompted by the script.
+								</p>
+								<div class="version-note warning">May not work with Oxide.</div>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">4</span>
+									<div class="version-name">
+										<strong>Private Beta</strong>
+										<span class="version-badge">BETA</span>
+									</div>
+								</div>
+								<p>
+									Enter the branch name and its password
+									when prompted by the script.
+								</p>
+								<div class="version-note warning">May not work with Oxide.</div>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">5</span>
+									<div class="version-name">
+										<strong>Exit</strong>
+									</div>
+								</div>
+								<p>Close the menu without changing anything.</p>
+							</div>
+						</div>
+
+						<div class="notice">
+							<strong>Important:</strong>
+							If you change the Rust version,
+							run <code>update_oxide.bat</code> again afterwards.
+
+							Changing branches can overwrite Oxide files.
+						</div>
+					</div>
+				</div>
+
+				<!-- Server settings -->
+				<div class="sub-section" id="config-start">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="sliders-horizontal"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Server settings</h3>
+							<p>
+								Change how the server starts and which map it loads.
+							</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="config-purpose">
+							<span>
+								For this, you will need to edit your <code>start_server.bat</code> file.
+							</span>
+						</div>
+
+						<br>
+
+						<div class="setting-block custom-map">
+							<div class="setting-header">
+								<div>
+									<span class="setting-label">STARTUP CONFIGURATION</span>
+								</div>
+								<span class="setting-custom">EDIT</span>
+							</div>
+
+							<div class="code-label">
+								Your <code>start_server.bat</code> should look like this:
+							</div>
+
+							<div class="command-box">
+								<code>@echo off
 cd ./server_files/
 RustDedicated.exe ^
 -batchmode ^
@@ -1226,256 +719,187 @@ RustDedicated.exe ^
 +server.seed 2147483647 ^
 +server.worldsize 1000 ^
 +server.maxplayers 10</code>
-	</div>
-<div>
-			<span class="setting-label">^ = new line</span>
-		</div>
+							</div>
 
-</div>
-<br>
+							<div>
+								<span class="setting-label">^ = new line</span>
+							</div>
+						</div>
 
+						<br>
 
+						<!-- Procedural map -->
+						<details class="map-collapse">
+							<summary>
+								<div class="map-summary-title">
+									<span class="setting-label">MAP TYPE</span>
+									<h4>Procedural Map</h4>
+								</div>
+							</summary>
 
-<!-- PROCEDURAL MAP -->
+							<div class="map-collapse-content">
+								<p>
+									Let Rust generate a map automatically
+									using a seed and world size.
+								</p>
 
-<details class="map-collapse">
+								<div class="code-label">
+									Keep these settings:
+								</div>
 
-<summary>
-	<div class="map-summary-title">
-	<span class="setting-label">MAP TYPE</span>
-	<h4>Procedural Map</h4>
-	</div>
-</summary>
-
-<div class="map-collapse-content">
-
-	<p>
-	Let Rust generate a map automatically
-	using a seed and world size.
-	</p>
-
-	<div class="code-label">
-	Keep these settings:
-	</div>
-
-	<div class="command-box">
-	<code>+server.level "Procedural Map"
+								<div class="command-box">
+									<code>+server.level "Procedural Map"
 +server.seed 2147483647
 +server.worldsize 1000</code>
-
-	<button onclick="copyCommand(this)">
-		COPY
-	</button>
-	</div>
-
-	<div class="setting-help">
-
-	<div>
-		<strong>Seed</strong>
-		<span>
-		Controls which procedural map is generated.
-		</span>
-	</div>
-
-	<div>
-		<strong>World size</strong>
-		<span>
-		Controls the size of the generated map.
-		</span>
-	</div>
-
-	</div>
-
-</div>
-
-</details>
-
-
-<!-- CUSTOM MAP -->
-
-<details class="map-collapse" id="config-custom-map">
-
-<summary>
-	<div class="map-summary-title">
-	<span class="setting-label">MAP TYPE</span>
-	<h4>Custom Map</h4>
-	</div>
-
-
-</summary>
-
-<div class="map-collapse-content">
-
-	<p>
-	Use an existing Rust custom map instead of generating
-	a procedural map.
-	</p>
-
-	<!-- GET MAP -->
-
-	<div class="card" style="margin-bottom:10px;">
-
-	<h3>Get the map from a server</h3>
-
-	<div class="description">
-		If you are playing on a server that uses a custom map,
-		you can check which map the server is using from the
-		Rust F1 console.
-	</div>
-
-	<ol class="steps">
-
-		<li class="step">
-		<h3>Join the server</h3>
-
-		<div class="description">
-			Connect to the Rust server whose map you want to obtain.
-		</div>
-		</li>
-
-		<li class="step">
-		<h3>Open the F1 console</h3>
-
-		<div class="description">
-			Press <strong>F1</strong> while you are connected
-			to the server.
-		</div>
-		</li>
-
-		<li class="step">
-
-		<h3>Check the server information</h3>
-
-		<div class="description">
-			Use the F1 console to inspect the server information
-			and identify the map being used.
-		</div>
-
-		<img
-			class="step-image"
-			src="images/console.png"
-			alt="Rust F1 console"
-		>
-
-		</li>
-
-	</ol>
-
-	</div>
-
-	<!-- INSTALL -->
-
-	<div class="card" style="margin-bottom:10px;">
-
-	<h3>Use the map on your server</h3>
-
-	<div class="description">
-		Once you have a direct URL to the
-		<code>.map</code> file, put it in your
-		<code>start_server.bat</code>.
-	</div>
-
-	<div class="code-label">
-		Use:
-	</div>
-
-	<div class="command-box">
-
-		<code>+server.levelurl "https://maps.rustmaps.com/288/e9ba372f1b224bde83ce68f7ce591864/procedural__4555_55mQZn0PsUm6EKRCl0x3GQ.map"</code>
-
-		<button onclick="copyCommand(this)">
-		COPY
-		</button>
-
-	</div>
-
-	</div>
-
-	<!-- IMPORTANT -->
-
-	<div class="notice">
-
-	<strong>Do not keep both configurations.</strong>
-
-	When using a custom map, remove the procedural map settings:
-
-	<br><br>
-
-	<code>+server.level</code>
-	<code>+server.seed</code>
-	<code>+server.worldsize</code>
-
-	<br><br>
-
-	Your startup configuration should use
-	<code>+server.levelurl</code>
-	instead.
-
-	</div>
-
-	<div class="notice info">
-
-	If you're a content creator, Custom Maps are perfect for creating cinematics on the same map where you recorded your gameplay.
-
-	</div>
-
-</div>
-
-</details>
-
-
-</section>
-
-
-
-<!-- =====================================================
-	CHAPTER 5
-	===================================================== -->
-
-<section class="chapter" id="files">
-
-<h2>
-	<span class="num">5</span>
-	<i data-lucide="folder" class="chapter-icon"></i>
-	Server files
-</h2>
-
-
-<div class="chapter-content">
-
-	<p class="intro">
-	Everything related to the actual Rust server
-	is stored inside <code>server_files</code>.
-	</p>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="files-structure">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="folder-tree"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Server folder structure</h3>
-
-		<p>
-			The server executable and its data are stored here.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<pre class="tree">rust_server/
+									<button onclick="copyCommand(this)">COPY</button>
+								</div>
+
+								<div class="setting-help">
+									<div>
+										<strong>Seed</strong>
+										<span>Controls which procedural map is generated.</span>
+									</div>
+									<div>
+										<strong>World size</strong>
+										<span>Controls the size of the generated map.</span>
+									</div>
+								</div>
+							</div>
+						</details>
+
+						<!-- Custom map -->
+						<details class="map-collapse" id="config-custom-map">
+							<summary>
+								<div class="map-summary-title">
+									<span class="setting-label">MAP TYPE</span>
+									<h4>Custom Map</h4>
+								</div>
+							</summary>
+
+							<div class="map-collapse-content">
+								<p>
+									Use an existing Rust custom map instead of generating
+									a procedural map.
+								</p>
+
+								<!-- Get map -->
+								<div class="card" style="margin-bottom:10px;">
+									<h3>Get the map from a server</h3>
+
+									<div class="description">
+										If you are playing on a server that uses a custom map,
+										you can check which map the server is using from the
+										Rust F1 console.
+									</div>
+
+									<ol class="steps">
+										<li class="step">
+											<h3>Join the server</h3>
+											<div class="description">
+												Connect to the Rust server whose map you want to obtain.
+											</div>
+										</li>
+
+										<li class="step">
+											<h3>Open the F1 console</h3>
+											<div class="description">
+												Press <strong>F1</strong> while you are connected
+												to the server.
+											</div>
+										</li>
+
+										<li class="step">
+											<h3>Check the server information</h3>
+											<div class="description">
+												Use the F1 console to inspect the server information
+												and identify the map being used.
+											</div>
+
+											<img
+												class="step-image"
+												src="images/console.png"
+												alt="Rust F1 console"
+											>
+										</li>
+									</ol>
+								</div>
+
+								<!-- Install -->
+								<div class="card" style="margin-bottom:10px;">
+									<h3>Use the map on your server</h3>
+
+									<div class="description">
+										Once you have a direct URL to the
+										<code>.map</code> file, put it in your
+										<code>start_server.bat</code>.
+									</div>
+
+									<div class="code-label">Use:</div>
+
+									<div class="command-box">
+										<code>+server.levelurl "https://maps.rustmaps.com/288/e9ba372f1b224bde83ce68f7ce591864/procedural__4555_55mQZn0PsUm6EKRCl0x3GQ.map"</code>
+										<button onclick="copyCommand(this)">COPY</button>
+									</div>
+								</div>
+
+								<!-- Important -->
+								<div class="notice">
+									<strong>Do not keep both configurations.</strong>
+
+									When using a custom map, remove the procedural map settings:
+
+									<br><br>
+
+									<code>+server.level</code>
+									<code>+server.seed</code>
+									<code>+server.worldsize</code>
+
+									<br><br>
+
+									Your startup configuration should use
+									<code>+server.levelurl</code>
+									instead.
+								</div>
+
+								<div class="notice info">
+									If you're a content creator, Custom Maps are perfect for
+									creating cinematics on the same map where you recorded your gameplay.
+								</div>
+							</div>
+						</details>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Chapter 5 -->
+		<section class="chapter" id="files">
+			<h2>
+				<span class="num">5</span>
+				<i data-lucide="folder" class="chapter-icon"></i>
+				Server files
+			</h2>
+
+			<div class="chapter-content">
+				<p class="intro">
+					Everything related to the actual Rust server
+					is stored inside <code>server_files</code>.
+				</p>
+
+				<!-- Structure -->
+				<div class="sub-section" id="files-structure">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="folder-tree"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Server folder structure</h3>
+							<p>The server executable and its data are stored here.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<pre class="tree">rust_server/
 └── server_files/
 	├── RustDedicated.exe
 	├── RustDedicated_Data/
@@ -1485,162 +909,109 @@ RustDedicated.exe ^
 		├── config/
 		├── data/
 		└── logs/</pre>
+					</div>
+				</div>
 
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-	<div class="sub-section" id="files-important">
-
-	<div class="sub-header">
-
-		<div class="sub-icon">
-		<i data-lucide="file-cog"></i>
-		</div>
-
-		<div class="sub-header-text">
-
-		<h3>Important files</h3>
-
-		<p>
-			The files you will interact with most often.
-		</p>
-
-		</div>
-
-	</div>
-
-
-	<div class="sub-body">
-
-		<div class="version-list">
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">
-				<i data-lucide="play" class="icon-small"></i>
-			</span>
-
-			<div class="version-name">
-				<strong>start_server.bat</strong>
-			</div>
-
-			</div>
-
-			<p>
-			Starts the Rust dedicated server
-			using your configured settings.
-			</p>
-
-		</div>
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">
-				<i data-lucide="puzzle" class="icon-small"></i>
-			</span>
-
-			<div class="version-name">
-				<strong>update_oxide.bat</strong>
-			</div>
-
-			</div>
-
-			<p>
-			Installs or updates Oxide after
-			Rust updates.
-			</p>
-
-		</div>
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">
-				<i data-lucide="git-branch" class="icon-small"></i>
-			</span>
-
-			<div class="version-name">
-				<strong>select_version.bat</strong>
-			</div>
-
-			</div>
-
-			<p>
-			Switches between Rust server branches.
-			</p>
-
-		</div>
-
-
-		<div class="version-card">
-
-			<div class="version-top">
-
-			<span class="version-number">
-				<i data-lucide="box" class="icon-small"></i>
-			</span>
-
-			<div class="version-name">
-				<strong>RustDedicated.exe</strong>
-			</div>
-
-			</div>
-
-			<p>
-			The main executable used to run
-			the dedicated server.
-			</p>
-
-		</div>
-
-		</div>
-
-	</div>
-
-	</div>
-
-
-
-	<!-- SUBSECTION -->
-
-					<div class="sub-section" id="files-notes">
-						<div class="sub-header">
-							<div class="sub-icon">
-								<i data-lucide="info"></i>
-							</div>
-							<div class="sub-header-text">
-								<h3>Good to know</h3>
-								<p>A few things to keep in mind when browsing the files.</p>
-							</div>
+				<!-- Important files -->
+				<div class="sub-section" id="files-important">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="file-cog"></i>
 						</div>
-						<div class="sub-body">
-							<div class="notice info">
-								<ul style="margin:0; padding-left:18px;">
-									<li>Everything the server needs is inside <code>server_files</code>.</li>
-									<li>The batch files stay next to <code>server_files</code>.</li>
-									<li>Some folders only appear after the first launch	or after installing Oxide.</li>
-								</ul>
+						<div class="sub-header-text">
+							<h3>Important files</h3>
+							<p>The files you will interact with most often.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="version-list">
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">
+										<i data-lucide="play" class="icon-small"></i>
+									</span>
+									<div class="version-name">
+										<strong>start_server.bat</strong>
+									</div>
+								</div>
+								<p>
+									Starts the Rust dedicated server
+									using your configured settings.
+								</p>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">
+										<i data-lucide="puzzle" class="icon-small"></i>
+									</span>
+									<div class="version-name">
+										<strong>update_oxide.bat</strong>
+									</div>
+								</div>
+								<p>
+									Installs or updates Oxide after
+									Rust updates.
+								</p>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">
+										<i data-lucide="git-branch" class="icon-small"></i>
+									</span>
+									<div class="version-name">
+										<strong>select_version.bat</strong>
+									</div>
+								</div>
+								<p>Switches between Rust server branches.</p>
+							</div>
+
+							<div class="version-card">
+								<div class="version-top">
+									<span class="version-number">
+										<i data-lucide="box" class="icon-small"></i>
+									</span>
+									<div class="version-name">
+										<strong>RustDedicated.exe</strong>
+									</div>
+								</div>
+								<p>
+									The main executable used to run
+									the dedicated server.
+								</p>
 							</div>
 						</div>
 					</div>
-					<a class="back" href="#top"><i data-lucide="arrow-up" class="icon-small"></i>Back to top</a>
 				</div>
-			</section>
-		</div>
-		<script src="https://unpkg.com/lucide@latest"></script>
-		<script src="script.js"></script>
-	</body>
+
+				<!-- Good to know -->
+				<div class="sub-section" id="files-notes">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="info"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Good to know</h3>
+							<p>A few things to keep in mind when browsing the files.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="notice info">
+							<ul style="margin:0; padding-left:18px;">
+								<li>Everything the server needs is inside <code>server_files</code>.</li>
+								<li>The batch files stay next to <code>server_files</code>.</li>
+								<li>Some folders only appear after the first launch or after installing Oxide.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+	<script src="https://unpkg.com/lucide@latest"></script>
+	<script src="script.js"></script>
+</body>
 </html>
