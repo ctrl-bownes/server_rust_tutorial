@@ -37,7 +37,7 @@ echo :: You can use comments to disable commands you don't want to execute.>> st
 echo :: This lets you keep the commands in the file in case you want to use them later.>> start_server.bat
 echo.>> start_server.bat
 echo :: For example, uncomment the 4 lines below if you want your server>> start_server.bat
-echo :: to automatically update when you run boot your server script.>> start_server.bat
+echo :: to automatically update when you run your start_server.bat script.>> start_server.bat
 echo.>> start_server.bat
 echo :: force_install_dir ../rust_server/server_files>> start_server.bat
 echo :: login anonymous>> start_server.bat
