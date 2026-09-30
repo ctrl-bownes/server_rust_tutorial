@@ -45,7 +45,6 @@ echo :: app_update 258550 -beta public>> start_server.bat
 echo :: quit>> start_server.bat
 echo.>> start_server.bat
 echo.>> start_server.bat
-echo @echo off> start_server.bat
 echo @echo off>> start_server.bat
 echo.>> start_server.bat
 echo cd ./server_files/>> start_server.bat
