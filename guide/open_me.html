@@ -77,10 +77,8 @@
 							<li class="step">
 								<h3>Wait for the download to finish</h3>
 								<div class="description">
-									The script downloads <strong>SteamCMD</strong> and the
-									<strong>Rust dedicated server</strong> files.
 									This can take a while.
-									<strong>Do not close the window.</strong>
+									Do <strong>not</strong> close the window.
 								</div>
 							</li>
 
@@ -88,8 +86,8 @@
 								<h3>Wait for &laquo;Setup finished!&raquo;</h3>
 								<div class="description">
 									When you see <code>Setup finished!</code>,
-									press any key to close the window.
-									Your server is now installed.
+									press any key to close the window.<br>
+									Your server is now installed. 🎉
 								</div>
 							</li>
 						</ol>
@@ -113,13 +111,14 @@
 
 					<div class="sub-body">
 						<pre class="tree">RustServer/
+<span style="color: rgb(86, 86, 86);">├── guide/
 ├── setup.bat
 ├── steamcmd/
-└── <span style="color: red;">rust_server/</span>
-	├── start_server.bat
-	├── update_oxide.bat
-	├── select_version.bat
-	└── server_files/</pre>
+└── </span><span style="color: rgb(89, 255, 0);">rust_server/</span>
+	├── start_server.bat          <span style="color: rgb(86, 86, 86);"># Start your Server.</span>
+	├── update_oxide.bat          <span style="color: rgb(86, 86, 86);"># Install/update oxide.</span>
+	├── select_version.bat        <span style="color: rgb(86, 86, 86);"># Switch between branches (main, staging, beta, ...).</span>
+	└── server_files/             <span style="color: rgb(86, 86, 86);"># Your server files.</span></pre>
 
 						<div class="notice info">
 							<strong>Good to know:</strong>
@@ -465,8 +464,16 @@
 							</div>
 						</a>
 
-						<a class="config-nav-card" href="#config-version">
+						<a class="config-nav-card" href="#config-plugins">
 							<span class="config-nav-number">02</span>
+							<div>
+								<strong>Install plugins</strong>
+								<p>Add plugins to extend your server.</p>
+							</div>
+						</a>
+
+						<a class="config-nav-card" href="#config-version">
+							<span class="config-nav-number">03</span>
 							<div>
 								<strong>Choose a version</strong>
 								<p>Switch between Rust branches.</p>
@@ -474,7 +481,7 @@
 						</a>
 
 						<a class="config-nav-card" href="#config-start">
-							<span class="config-nav-number">03</span>
+							<span class="config-nav-number">04</span>
 							<div>
 								<strong>Server settings</strong>
 								<p>Change the map and startup settings.</p>
@@ -505,50 +512,123 @@
 					</div>
 
 					<div class="sub-body">
-						<div class="config-purpose">
-							<strong>What is Oxide?</strong>
-							<span>
-								Oxide (uMod) is the modding framework used
-								to run Rust plugins.
+						<div class="config-action">
+							<div class="config-action-title">
+								<span>How to install/update oxide</span>
+								<small>4 steps</small>
+							</div>
 
-								If you only want a completely vanilla server,
-								you do not need it.
-							</span>
+							<div class="action-steps">
+								<div>
+									<b>1</b>
+									<span>Stop the server.</span>
+								</div>
+								<div>
+									<b>2</b>
+									<span>Run <code>update_oxide.bat</code>.</span>
+								</div>
+								<div>
+									<b>3</b>
+									<span>Wait till you see installation completed!.<br>
+									Then close the window</span>
+								</div>
+							</div>
 						</div>
+					</div>
+				</div>
 
+				<!-- Plugins -->
+				<div class="sub-section" id="config-plugins">
+					<div class="sub-header">
+						<div class="sub-icon">
+							<i data-lucide="puzzle"></i>
+						</div>
+						<div class="sub-header-text">
+							<h3>Install a plugin</h3>
+							<p>Add plugins to extend your Rust server with new features.</p>
+						</div>
+					</div>
+
+					<div class="sub-body">
+						<div class="notice">
+							<strong>Important:</strong>
+							<ul>
+								<li>Oxide need to be installed</li>
+								<li>If <code>/oxide/plugins</code> is missing, make sure
+								oxide is installed, and make sure to <strong>boot</strong> the server once
+								with oxide installed, oxide will then generate it's own
+								files.</li>
+								<li>Some plugins require additional configuration files,
+								permissions or other plugins. Always check the plugin's
+								instructions before installing it.</li>
+							</ul>
+						</div>
+						<br>
+						<div class="config-purpose">
+							<strong>What is a plugin?</strong>
+							<span>
+								Plugins are <code>.cs</code> files that add new features
+								or commands to your Rust server.
+								They require Oxide to be installed.
+							</span>
+							<br>
+							<span>
+								For example this <strong><a target="_blank" style="text-decoration: none; color: rgb(111, 177, 188);" href="https://umod.org/plugins/workshop-skin-viewer">plugin</a></strong>
+								allow you to import skins directly from the workshop.<br><br>
+							</span>
+							<img
+								class="step-image"
+								src="images/console.png"
+								alt="Rust F1 console"
+							>
+						</div>
+						<br>
 						<ol class="steps">
 							<li class="step">
-								<h3>Stop the server</h3>
+								<h3>Download a plugin</h3>
 								<div class="description">
-									Close the server console or type <code>quit</code>.
+									Download the plugin you want as a
+									<code>.cs</code> file.
 								</div>
 							</li>
 
 							<li class="step">
-								<h3>Run <code>update_oxide.bat</code></h3>
+								<h3>Open the plugins folder</h3>
 								<div class="description">
-									Double-click the file inside your
-									<code>rust_server</code> folder.
+									Go to:
+									<code>rust_server/server_files/oxide/plugins/</code>
 								</div>
 							</li>
 
 							<li class="step">
-								<h3>Wait for the update to finish</h3>
+								<h3>Copy the plugin</h3>
 								<div class="description">
-									Wait until the script reports:
-									<code>Oxide update finished successfully.</code>
+									Place the <code>.cs</code> file directly inside
+									the <code>plugins</code> folder.
 								</div>
 							</li>
 
 							<li class="step">
-								<h3>Start the server again</h3>
+								<h3>Start or restart the server</h3>
 								<div class="description">
-									Launch <code>start_server.bat</code>
-									and verify the installation with
-									<code>oxide.version</code>.
+									Oxide automatically detects the plugin and loads it.
+								</div>
+							</li>
+
+							<li class="step">
+								<h3>Check the plugin</h3>
+								<div class="description">
+									Use the server console to check for plugin errors.
+									You can also check the
+									<code>oxide/logs/</code> folder.
 								</div>
 							</li>
 						</ol>
+
+						<div class="notice info">
+							<strong>Plugin folder:</strong>
+							<code>rust_server/server_files/oxide/plugins/</code>
+						</div>
 					</div>
 				</div>
 

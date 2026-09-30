@@ -143,7 +143,7 @@ button.copied { background: #285d3a; border-color: #3b8052; animation: pulseGlow
 .config-overview-title { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
 .config-overview-title span { font-size: 12px; font-weight: 600; }
 .config-overview-title small { color: #666; font-size: 10px; }
-.config-overview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.config-overview-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
 
 .config-nav-card { display: flex; align-items: center; gap: 9px; text-decoration: none; color: inherit; background: #191c20; border: 1px solid #2b2f34; border-radius: 6px; padding: 10px; transition: background .15s ease, border-color .15s ease, transform .2s ease, box-shadow .2s ease; }
 .config-nav-card:hover { background: #20242a; border-color: #41474e; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 0, 0, .22); }
