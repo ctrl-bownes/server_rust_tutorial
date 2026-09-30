@@ -70,4 +70,6 @@ It is **not affiliated with, endorsed by, sponsored by, or officially connected 
 
 The guide does not require an account and does not collect or store personal data.
 
+AI has been use for this project.
+
 ---
