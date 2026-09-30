@@ -1,3244 +1,1224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rust Server Guide</title>
-
-<style>
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 74px;
-}
-
-body {
-  margin: 0;
-  background: #101214;
-  color: #e8e8e8;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-
-/* =====================================================
-   CONTAINER
-   ===================================================== */
-
-.container {
-  width: min(1100px, calc(100% - 32px));
-  margin: 0 auto 60px;
-}
-
-header {
-  padding: 28px 0 14px;
-  animation: pageEnter .55s ease both;
-}
-
-h1 {
-  margin: 0 0 4px;
-  font-size: 26px;
-  font-weight: 600;
-}
-
-.subtitle {
-  color: #777;
-  font-size: 12px;
-  margin-bottom: 8px;
-}
-
-/* =====================================================
-   GLOBAL ANIMATIONS
-   ===================================================== */
-
-@keyframes pageEnter {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes mapOpen {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulseGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 rgba(40, 93, 58, 0);
-  }
-
-  50% {
-    box-shadow: 0 0 18px rgba(40, 93, 58, 0.18);
-  }
-}
-
-/* =====================================================
-   NAVIGATION
-   ===================================================== */
-
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-
-  background: #101214ee;
-  backdrop-filter: blur(10px);
-
-  border-bottom: 1px solid #2b2f34;
-  margin-bottom: 18px;
-
-  animation: pageEnter .45s ease both;
-}
-
-nav .inner {
-  width: min(1100px, calc(100% - 32px));
-  margin: 0 auto;
-
-  display: flex;
-  gap: 4px;
-
-  overflow-x: auto;
-  padding: 8px 0;
-}
-
-nav a {
-  flex: none;
-
-  display: flex;
-  align-items: center;
-  gap: 6px;
-
-  color: #aaa;
-  text-decoration: none;
-
-  font-size: 12px;
-
-  padding: 6px 12px;
-  border-radius: 5px;
-  border: 1px solid transparent;
-
-  transition:
-    color .18s ease,
-    background .18s ease,
-    border-color .18s ease,
-    transform .18s ease;
-}
-
-nav a:hover {
-  color: #fff;
-  background: #191c20;
-  border-color: #2b2f34;
-  transform: translateY(-1px);
-}
-
-nav a:active {
-  transform: translateY(1px) scale(.98);
-}
-
-.nav-icon {
-  width: 14px;
-  height: 14px;
-  stroke-width: 1.8;
-
-  transition:
-    transform .2s ease,
-    color .2s ease;
-}
-
-nav a:hover .nav-icon {
-  transform: scale(1.12);
-}
-
-/* =====================================================
-   ICONS
-   ===================================================== */
-
-.icon {
-  width: 17px;
-  height: 17px;
-  flex: none;
-  stroke-width: 1.8;
-}
-
-.icon-small {
-  width: 14px;
-  height: 14px;
-  flex: none;
-  stroke-width: 1.8;
-}
-
-/* =====================================================
-   CHAPTERS
-   ===================================================== */
-
-.chapter {
-  margin-bottom: 14px;
-
-  border: 1px solid transparent;
-  border-radius: 10px;
-  overflow: hidden;
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-}
-
-.chapter.open {
-  background: #15181b;
-  border-color: #2b2f34;
-
-  box-shadow:
-    0 10px 30px rgba(0, 0, 0, .28),
-    0 2px 5px rgba(0, 0, 0, .18);
-}
-
-/* Chapter title */
-
-.chapter > h2 {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  margin: 0;
-  padding: 13px 15px;
-
-  font-size: 19px;
-  font-weight: 600;
-
-  background: #191c20;
-
-  border: 1px solid #2b2f34;
-  border-radius: 8px;
-
-  cursor: pointer;
-  user-select: none;
-
-  transition:
-    background .2s ease,
-    border-color .2s ease,
-    transform .2s ease;
-}
-
-.chapter > h2:hover {
-  background: #1d2126;
-  border-color: #3a3f45;
-}
-
-.chapter > h2:active {
-  transform: scale(.995);
-}
-
-.chapter.open > h2 {
-  border-color: #343a40;
-  border-radius: 8px 8px 0 0;
-}
-
-/* Chapter number */
-
-.chapter > h2 .num {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 27px;
-  height: 25px;
-
-  background: #285d3a;
-  color: #fff;
-
-  border-radius: 5px;
-
-  font-size: 11px;
-  font-weight: bold;
-
-  flex: none;
-
-  transition:
-    transform .25s ease,
-    box-shadow .25s ease;
-}
-
-.chapter > h2:hover .num {
-  transform: scale(1.06);
-}
-
-.chapter.open > h2 .num {
-  box-shadow: 0 0 12px rgba(40, 93, 58, .25);
-}
-
-/* Chapter icon */
-
-.chapter-icon {
-  color: #777;
-
-  width: 18px;
-  height: 18px;
-
-  flex: none;
-
-  transition:
-    transform .3s ease,
-    color .3s ease;
-}
-
-.chapter > h2:hover .chapter-icon {
-  color: #aaa;
-  transform: rotate(-4deg) scale(1.08);
-}
-
-/* + / - */
-
-.chapter > h2::after {
-  content: "+";
-
-  margin-left: auto;
-
-  color: #777;
-
-  font-size: 20px;
-  font-weight: normal;
-  line-height: 1;
-
-  transition:
-    transform .25s ease,
-    color .2s ease;
-}
-
-.chapter.open > h2::after {
-  content: "−";
-  color: #aaa;
-  transform: rotate(180deg);
-}
-
-/* Chapter content */
-
-.chapter-content {
-  display: none;
-  padding: 0 12px 14px;
-}
-
-.chapter.open .chapter-content {
-  display: block;
-  animation: fadeUp .28s ease both;
-}
-
-/* Animate direct content */
-
-.chapter.open .chapter-content > * {
-  animation: fadeUp .35s ease both;
-}
-
-.chapter.open .chapter-content > *:nth-child(2) {
-  animation-delay: .03s;
-}
-
-.chapter.open .chapter-content > *:nth-child(3) {
-  animation-delay: .06s;
-}
-
-.chapter.open .chapter-content > *:nth-child(4) {
-  animation-delay: .09s;
-}
-
-.chapter.open .chapter-content > *:nth-child(5) {
-  animation-delay: .12s;
-}
-
-/* =====================================================
-   INTRO
-   ===================================================== */
-
-.intro {
-  color: #999;
-  font-size: 13px;
-  margin: 13px 2px;
-}
-
-/* =====================================================
-   SUB-SECTIONS
-   ===================================================== */
-
-.sub-section {
-  margin: 12px 0;
-
-  background: #191c20;
-
-  border: 1px solid #2b2f34;
-  border-radius: 8px;
-
-  overflow: hidden;
-
-  box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
-
-  transition:
-    border-color .25s ease,
-    box-shadow .25s ease,
-    transform .25s ease;
-}
-
-.sub-section:hover {
-  border-color: #353a40;
-
-  box-shadow:
-    0 9px 25px rgba(0, 0, 0, .24);
-
-  transform: translateY(-1px);
-}
-
-/* Sub header */
-
-.sub-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
-
-  padding: 13px 14px;
-
-  background: #1b1e22;
-
-  border-bottom: 1px solid #2b2f34;
-}
-
-.sub-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 31px;
-  height: 31px;
-
-  flex: none;
-
-  background: #25292e;
-  border: 1px solid #3a3f45;
-
-  border-radius: 6px;
-
-  color: #aaa;
-
-  transition:
-    transform .25s ease,
-    background .25s ease,
-    color .25s ease;
-}
-
-.sub-section:hover .sub-icon {
-  transform: scale(1.06);
-  background: #2a2f35;
-  color: #ddd;
-}
-
-.sub-icon svg {
-  width: 16px;
-  height: 16px;
-}
-
-.sub-header-text {
-  min-width: 0;
-}
-
-.sub-header h3 {
-  margin: 0 0 2px;
-
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.sub-header p {
-  margin: 0;
-
-  color: #777;
-
-  font-size: 11px;
-  line-height: 1.45;
-}
-
-.sub-body {
-  padding: 18px;
-}
-
-/* =====================================================
-   CARDS
-   ===================================================== */
-
-.card {
-  background: #191c20;
-
-  border: 1px solid #2b2f34;
-  border-radius: 8px;
-
-  padding: 14px 16px;
-  margin-bottom: 10px;
-
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .16);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease,
-    background .2s ease;
-}
-
-.card:hover {
-  transform: translateY(-2px);
-
-  border-color: #3a4047;
-
-  background: #1b1f23;
-
-  box-shadow:
-    0 8px 22px rgba(0, 0, 0, .25);
-}
-
-.card h3 {
-  margin: 0 0 4px;
-
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.card h4 {
-  margin: 16px 0 5px;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  color: #ddd;
-}
-
-.description {
-  color: #888;
-
-  font-size: 12px;
-
-  margin-bottom: 10px;
-
-  line-height: 1.5;
-}
-
-.description strong,
-.notice strong {
-  color: #ddd;
-}
-
-/* =====================================================
-   NOTICES
-   ===================================================== */
-
-.notice {
-  background: #2a2416;
-
-  border: 1px solid #5a4a20;
-  border-radius: 6px;
-
-  color: #d8c48a;
-
-  font-size: 12px;
-  line-height: 1.5;
-
-  padding: 9px 11px;
-  margin: 10px 0;
-
-  transition:
-    transform .2s ease,
-    box-shadow .2s ease;
-}
-
-.notice:hover {
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 5px 16px rgba(0, 0, 0, .2);
-}
-
-.notice.info {
-  background: #142129;
-  border-color: #244a5e;
-  color: #9cc7dd;
-}
-
-.notice strong {
-  color: inherit;
-}
-
-/* =====================================================
-   LINKS
-   ===================================================== */
-
-a.link {
-  color: #6fb1ff;
-  text-decoration: none;
-
-  transition:
-    color .18s ease;
-}
-
-a.link:hover {
-  color: #9bc9ff;
-  text-decoration: underline;
-}
-
-/* =====================================================
-   STEPS
-   ===================================================== */
-
-.steps {
-  list-style: none;
-
-  margin: 0;
-  padding: 0;
-
-  counter-reset: step;
-}
-
-.step {
-  counter-increment: step;
-
-  position: relative;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-  border-radius: 7px;
-
-  padding: 12px 13px 12px 50px;
-
-  margin-bottom: 8px;
-
-  box-shadow: 0 4px 14px rgba(0, 0, 0, .16);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    background .2s ease,
-    box-shadow .2s ease;
-}
-
-.step:hover {
-  transform: translateX(3px);
-
-  background: #14171a;
-
-  border-color: #3a4046;
-
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, .22);
-}
-
-.step:last-child {
-  margin-bottom: 0;
-}
-
-.step::before {
-  content: counter(step);
-
-  position: absolute;
-
-  left: 13px;
-  top: 12px;
-
-  width: 26px;
-  height: 26px;
-
-  border-radius: 50%;
-
-  background: #25292e;
-
-  border: 1px solid #3a3f45;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-weight: bold;
-  font-size: 11px;
-
-  color: #bbb;
-
-  transition:
-    transform .2s ease,
-    background .2s ease;
-}
-
-.step:hover::before {
-  transform: scale(1.08);
-
-  background: #2c3238;
-}
-
-.step h3 {
-  margin: 3px 0 4px;
-
-  font-size: 13px;
-  font-weight: 600;
-}
-
-/* =====================================================
-   SCREENSHOTS
-   ===================================================== */
-
-.shot {
-  margin-top: 10px;
-
-  text-align: center;
-  line-height: 0;
-}
-
-.shot .ph {
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 4px;
-
-  color: #555;
-
-  font-size: 12px;
-
-  text-align: center;
-
-  padding: 10px;
-}
-
-.shot .ph small {
-  color: #444;
-
-  font-family: Consolas, monospace;
-
-  font-size: 11px;
-}
-
-.shot img {
-  display: inline-block;
-
-  width: auto;
-  height: auto;
-
-  max-width: 100%;
-
-  border-radius: 8px;
-
-  transition:
-    transform .3s ease,
-    box-shadow .3s ease;
-}
-
-.shot img:hover {
-  transform: scale(1.015);
-
-  box-shadow:
-    0 12px 30px rgba(0, 0, 0, .45);
-}
-
-.step-image {
-  display: block;
-
-  width: 100%;
-  max-width: 700px;
-  max-height: 350px;
-
-  height: auto;
-
-  object-fit: contain;
-
-  margin: 20px auto 0;
-
-  border-radius: 8px;
-
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, .35);
-
-  transition:
-    transform .3s ease,
-    box-shadow .3s ease;
-}
-
-.step-image:hover {
-  transform: scale(1.01);
-
-  box-shadow:
-    0 14px 34px rgba(0, 0, 0, .5);
-}
-
-/* =====================================================
-   INPUTS
-   ===================================================== */
-
-.input-row {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 10px;
-
-  margin-bottom: 10px;
-}
-
-.input-group {
-  margin: 0;
-}
-
-label {
-  display: block;
-
-  color: #999;
-
-  font-size: 11px;
-
-  margin-bottom: 4px;
-}
-
-input {
-  width: 100%;
-  height: 34px;
-
-  padding: 7px 9px;
-
-  border-radius: 5px;
-
-  border: 1px solid #353a40;
-
-  background: #0d0f11;
-
-  color: #eee;
-
-  outline: none;
-
-  font-family: Consolas, monospace;
-
-  font-size: 12px;
-
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease,
-    background .2s ease;
-}
-
-input:focus {
-  border-color: #666;
-
-  background: #101316;
-
-  box-shadow:
-    0 0 0 2px rgba(111, 177, 255, .08);
-}
-
-/* =====================================================
-   COMMANDS
-   ===================================================== */
-
-.command-box {
-  display: flex;
-  align-items: stretch;
-
-  gap: 7px;
-
-  margin-bottom: 10px;
-}
-
-.command-box code {
-  flex: 1;
-
-  display: flex;
-  align-items: center;
-
-  min-width: 0;
-  min-height: 34px;
-
-  padding: 7px 9px;
-
-  background: #0b0d0f;
-
-  border: 1px solid #30343a;
-
-  border-radius: 5px;
-
-  color: #ccc;
-
-  font-family: Consolas, monospace;
-
-  font-size: 11px;
-
-  overflow-x: auto;
-
-  white-space: pre-wrap;
-  word-break: break-word;
-
-  transition:
-    border-color .2s ease,
-    background .2s ease;
-}
-
-.command-box:hover code {
-  border-color: #41474e;
-  background: #0d1012;
-}
-
-/* =====================================================
-   BUTTONS
-   ===================================================== */
-
-button {
-  height: 34px;
-
-  border: 1px solid #3a3f45;
-
-  background: #25292e;
-
-  color: white;
-
-  border-radius: 5px;
-
-  padding: 0 13px;
-
-  cursor: pointer;
-
-  font-size: 10px;
-  font-weight: bold;
-
-  transition:
-    background .15s ease,
-    border-color .15s ease,
-    transform .1s ease,
-    box-shadow .15s ease;
-}
-
-button:hover {
-  background: #343a41;
-
-  transform: translateY(-1px);
-
-  box-shadow:
-    0 4px 10px rgba(0, 0, 0, .25);
-}
-
-button:active {
-  transform: translateY(1px) scale(.97);
-
-  box-shadow: none;
-}
-
-button.copied {
-  background: #285d3a;
-
-  border-color: #3b8052;
-
-  animation: pulseGlow .5s ease;
-}
-
-/* =====================================================
-   CHOICES
-   ===================================================== */
-
-.choices {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 8px;
-
-  margin: 10px 0;
-}
-
-.choice {
-  display: flex;
-  align-items: flex-start;
-
-  gap: 10px;
-
-  text-decoration: none;
-  color: inherit;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-
-  border-radius: 7px;
-
-  padding: 12px;
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    background .2s ease,
-    box-shadow .2s ease;
-}
-
-.choice:hover {
-  border-color: #4a5058;
-
-  background: #1d2126;
-
-  transform: translateY(-3px);
-
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, .25);
-}
-
-.choice:active {
-  transform: translateY(0) scale(.99);
-}
-
-.choice-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 28px;
-  height: 28px;
-
-  flex: none;
-
-  border-radius: 5px;
-
-  background: #25292e;
-
-  color: #888;
-
-  transition:
-    transform .25s ease,
-    color .2s ease;
-}
-
-.choice:hover .choice-icon {
-  transform: scale(1.1);
-
-  color: #bbb;
-}
-
-.choice-icon svg {
-  width: 15px;
-  height: 15px;
-}
-
-.choice .tag {
-  font-size: 9px;
-
-  color: #6fb1ff;
-
-  text-transform: uppercase;
-
-  letter-spacing: .06em;
-}
-
-.choice h3 {
-  margin: 2px 0 3px;
-
-  font-size: 13px;
-}
-
-.choice p {
-  margin: 0;
-
-  color: #777;
-
-  font-size: 11px;
-
-  line-height: 1.45;
-}
-
-/* =====================================================
-   CONFIGURATION OVERVIEW
-   ===================================================== */
-
-.config-overview {
-  background: #111416;
-
-  border: 1px solid #292d32;
-  border-radius: 7px;
-
-  padding: 12px;
-
-  margin-bottom: 10px;
-
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, .16);
-}
-
-.config-overview-title {
-  display: flex;
-
-  align-items: baseline;
-  justify-content: space-between;
-
-  gap: 10px;
-
-  margin-bottom: 10px;
-}
-
-.config-overview-title span {
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.config-overview-title small {
-  color: #666;
-  font-size: 10px;
-}
-
-.config-overview-grid {
-  display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 7px;
-}
-
-.config-nav-card {
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  text-decoration: none;
-  color: inherit;
-
-  background: #191c20;
-
-  border: 1px solid #2b2f34;
-
-  border-radius: 6px;
-
-  padding: 10px;
-
-  transition:
-    background .15s ease,
-    border-color .15s ease,
-    transform .2s ease,
-    box-shadow .2s ease;
-}
-
-.config-nav-card:hover {
-  background: #20242a;
-
-  border-color: #41474e;
-
-  transform: translateY(-2px);
-
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, .22);
-}
-
-.config-nav-number {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 26px;
-  height: 26px;
-
-  flex: none;
-
-  border-radius: 5px;
-
-  background: #285d3a;
-
-  color: white;
-
-  font-size: 9px;
-  font-weight: bold;
-
-  transition: transform .2s ease;
-}
-
-.config-nav-card:hover .config-nav-number {
-  transform: scale(1.08);
-}
-
-.config-nav-card strong {
-  display: block;
-
-  font-size: 11px;
-
-  margin-bottom: 2px;
-}
-
-.config-nav-card p {
-  margin: 0;
-
-  color: #777;
-
-  font-size: 9px;
-
-  line-height: 1.4;
-}
-
-/* =====================================================
-   VERSION CARDS
-   ===================================================== */
-
-.version-list {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 7px;
-}
-
-.version-card {
-  padding: 11px;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-
-  border-radius: 7px;
-
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, .16);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
-}
-
-.version-card:hover {
-  transform: translateY(-2px);
-
-  border-color: #3a4047;
-
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, .25);
-}
-
-.version-card.version-main {
-  border-color: #315d41;
-}
-
-.version-top {
-  display: flex;
-
-  align-items: center;
-
-  gap: 8px;
-}
-
-.version-number {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 24px;
-  height: 24px;
-
-  flex: none;
-
-  border-radius: 5px;
-
-  background: #25292e;
-
-  border: 1px solid #3a3f45;
-
-  color: #ccc;
-
-  font-size: 10px;
-  font-weight: bold;
-
-  transition:
-    transform .2s ease;
-}
-
-.version-card:hover .version-number {
-  transform: scale(1.08);
-}
-
-.version-name {
-  display: flex;
-
-  align-items: center;
-
-  gap: 6px;
-}
-
-.version-name strong {
-  font-size: 12px;
-}
-
-.version-badge {
-  padding: 2px 5px;
-
-  border-radius: 3px;
-
-  background: #25292e;
-
-  color: #777;
-
-  font-size: 7px;
-  font-weight: bold;
-
-  letter-spacing: .05em;
-}
-
-.version-card > p {
-  margin: 8px 0;
-
-  color: #888;
-
-  font-size: 10px;
-
-  line-height: 1.45;
-}
-
-.version-note {
-  padding-top: 6px;
-
-  border-top: 1px solid #292d32;
-
-  color: #7eaf91;
-
-  font-size: 9px;
-}
-
-.version-note.warning {
-  color: #c5a967;
-}
-
-/* =====================================================
-   SETTINGS
-   ===================================================== */
-
-.setting-block {
-  margin-bottom: 8px;
-
-  padding: 13px;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-
-  border-radius: 7px;
-
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, .16);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease,
-    box-shadow .2s ease;
-}
-
-.setting-block:hover {
-  transform: translateY(-1px);
-
-  border-color: #3a4047;
-
-  box-shadow:
-    0 7px 20px rgba(0, 0, 0, .23);
-}
-
-.setting-block:last-child {
-  margin-bottom: 0;
-}
-
-.setting-block.custom-map {
-  border-color: #39434a;
-}
-
-.setting-header {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: flex-start;
-
-  gap: 10px;
-}
-
-.setting-label {
-  display: block;
-
-  color: #666;
-
-  font-size: 8px;
-  font-weight: bold;
-
-  letter-spacing: .08em;
-
-  margin-bottom: 2px;
-}
-
-.setting-block h4 {
-  margin: 0;
-
-  font-size: 13px;
-}
-
-.setting-block > p {
-  margin: 7px 0 11px;
-
-  color: #888;
-
-  font-size: 11px;
-}
-
-.setting-default,
-.setting-custom {
-  padding: 3px 6px;
-
-  border-radius: 4px;
-
-  background: #25292e;
-
-  color: #777;
-
-  font-size: 8px;
-  font-weight: bold;
-}
-
-.setting-custom {
-  color: #8ca7b5;
-}
-
-.code-label {
-  color: #777;
-
-  font-size: 9px;
-
-  margin-bottom: 5px;
-}
-
-.setting-help {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 7px;
-
-  margin-top: 8px;
-}
-
-.setting-help > div {
-  padding: 8px;
-
-  background: #0b0d0f;
-
-  border: 1px solid #292d32;
-
-  border-radius: 5px;
-
-  transition:
-    border-color .2s ease,
-    transform .2s ease;
-}
-
-.setting-help > div:hover {
-  border-color: #3b4148;
-
-  transform: translateY(-1px);
-}
-
-.setting-help strong {
-  display: block;
-
-  color: #bbb;
-
-  font-size: 9px;
-
-  margin-bottom: 2px;
-}
-
-.setting-help span {
-  color: #666;
-
-  font-size: 9px;
-}
-
-/* =====================================================
-   COLLAPSIBLE MAPS
-   ===================================================== */
-
-.map-collapse {
-  margin-bottom: 10px;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-
-  border-radius: 7px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 5px 16px rgba(0, 0, 0, .18);
-
-  transition:
-    border-color .25s ease,
-    box-shadow .25s ease,
-    transform .2s ease;
-}
-
-.map-collapse:hover {
-  border-color: #3a4047;
-
-  box-shadow:
-    0 8px 22px rgba(0, 0, 0, .24);
-}
-
-.map-collapse[open] {
-  border-color: #39434a;
-}
-
-.map-collapse > summary {
-  display: flex;
-
-  align-items: center;
-  justify-content: space-between;
-
-  gap: 12px;
-
-  padding: 13px;
-
-  cursor: pointer;
-
-  list-style: none;
-
-  user-select: none;
-
-  transition:
-    background .2s ease,
-    padding .2s ease;
-}
-
-.map-collapse > summary::-webkit-details-marker {
-  display: none;
-}
-
-.map-collapse > summary:hover {
-  background: #171a1e;
-}
-
-.map-collapse > summary:active {
-  background: #1b1f23;
-}
-
-.map-collapse > summary::after {
-  content: "+";
-
-  color: #777;
-
-  font-size: 20px;
-  line-height: 1;
-
-  transition:
-    transform .25s ease,
-    color .2s ease;
-}
-
-.map-collapse[open] > summary::after {
-  content: "−";
-
-  color: #aaa;
-
-  transform: rotate(180deg);
-}
-
-.map-summary-title {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 2px;
-}
-
-.map-summary-title .setting-label {
-  margin-bottom: 0;
-}
-
-.map-summary-title h4 {
-  margin: 0;
-
-  font-size: 13px;
-
-  transition:
-    color .2s ease,
-    transform .2s ease;
-}
-
-.map-collapse > summary:hover h4 {
-  color: #fff;
-
-  transform: translateX(2px);
-}
-
-.map-collapse-content {
-  padding: 0 13px 13px;
-
-  animation: mapOpen .25s ease both;
-}
-
-/* =====================================================
-   CONFIG ACTION
-   ===================================================== */
-
-.config-action {
-  margin-top: 10px;
-
-  padding: 11px;
-
-  background: #111416;
-
-  border: 1px solid #292d32;
-  border-radius: 7px;
-
-  box-shadow:
-    0 4px 14px rgba(0, 0, 0, .16);
-
-  transition:
-    transform .2s ease,
-    border-color .2s ease;
-}
-
-.config-action:hover {
-  transform: translateY(-1px);
-  border-color: #3a4047;
-}
-
-.config-action-title {
-  display: flex;
-
-  justify-content: space-between;
-  align-items: center;
-
-  margin-bottom: 9px;
-}
-
-.config-action-title span {
-  font-size: 11px;
-  font-weight: 600;
-}
-
-.config-action-title small {
-  color: #666;
-  font-size: 9px;
-}
-
-/* Steps */
-
-.action-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-
-  margin-bottom: 0;
-}
-
-.action-steps > div {
-  display: flex;
-  align-items: center;
-
-  gap: 9px;
-
-  padding: 8px 10px;
-
-  background: #191c20;
-
-  border: 1px solid #292d32;
-  border-radius: 6px;
-
-  color: #999;
-  font-size: 10px;
-
-  transition:
-    background .2s ease,
-    border-color .2s ease,
-    transform .2s ease;
-}
-
-.action-steps > div:hover {
-  background: #1d2126;
-  border-color: #3a4047;
-
-  transform: translateX(3px);
-}
-
-.action-steps b {
-  display: flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: 22px;
-  height: 22px;
-
-  flex: none;
-
-  border-radius: 50%;
-
-  background: #25292e;
-  border: 1px solid #3a3f45;
-
-  color: #ccc;
-
-  font-size: 9px;
-
-  transition:
-    transform .2s ease,
-    background .2s ease;
-}
-
-.action-steps > div:hover b {
-  transform: scale(1.08);
-  background: #2d3339;
-}
-
-.action-steps span {
-  line-height: 1.4;
-}
-
-/* =====================================================
-   CONFIG FINAL
-   ===================================================== */
-
-.config-final {
-  margin: 10px 0;
-
-  padding: 11px;
-
-  background: #142129;
-
-  border: 1px solid #244a5e;
-
-  border-radius: 7px;
-}
-
-.config-final > strong {
-  display: block;
-
-  color: #9cc7dd;
-
-  font-size: 10px;
-
-  margin-bottom: 7px;
-}
-
-.config-final > div {
-  display: flex;
-
-  align-items: center;
-
-  gap: 6px;
-
-  color: #8b9ba3;
-
-  font-size: 9px;
-}
-
-.config-final span {
-  color: #9cc7dd;
-
-  font-weight: bold;
-}
-
-/* =====================================================
-   FILE TREE
-   ===================================================== */
-
-pre.tree {
-  margin: 0;
-
-  background: #0b0d0f;
-
-  border: 1px solid #30343a;
-
-  border-radius: 6px;
-
-  padding: 12px 14px;
-
-  color: #ccc;
-
-  font-family: Consolas, monospace;
-
-  font-size: 12px;
-
-  line-height: 1.6;
-
-  overflow-x: auto;
-
-  transition:
-    border-color .2s ease,
-    box-shadow .2s ease;
-}
-
-pre.tree:hover {
-  border-color: #41474e;
-
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, .25);
-}
-
-/* =====================================================
-   BACK TO TOP
-   ===================================================== */
-
-.back {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  margin: 4px 2px 0;
-
-  font-size: 11px;
-
-  color: #777;
-
-  text-decoration: none;
-
-  transition:
-    color .2s ease,
-    transform .2s ease;
-}
-
-.back:hover {
-  color: #ccc;
-
-  transform: translateY(-1px);
-}
-
-.back .icon-small {
-  transition:
-    transform .25s ease;
-}
-
-.back:hover .icon-small {
-  transform: translateY(-2px);
-}
-
-/* =====================================================
-   INLINE CODE
-   ===================================================== */
-
-.description code,
-.notice code,
-.step code,
-li code,
-td code,
-.sub-header code,
-.sub-body code,
-.config-nav-card code {
-  padding: 1px 5px;
-
-  background: #0b0d0f;
-
-  border: 1px solid #30343a;
-
-  border-radius: 4px;
-
-  color: #ccc;
-
-  font-family: Consolas, monospace;
-
-  font-size: 11px;
-
-  transition:
-    border-color .15s ease,
-    background .15s ease;
-}
-
-code:hover {
-  border-color: #41474e;
-}
-
-/* =====================================================
-   SUB LABEL
-   ===================================================== */
-
-.sub-label {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 5px;
-
-  margin-bottom: 8px;
-
-  color: #666;
-
-  font-size: 9px;
-
-  font-weight: bold;
-
-  text-transform: uppercase;
-
-  letter-spacing: .08em;
-}
-
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media (max-width: 600px) {
-
-  .container,
-  nav .inner {
-    width: calc(100% - 20px);
-  }
-
-  .input-row,
-  .choices,
-  .config-overview-grid,
-  .version-list {
-    grid-template-columns: 1fr;
-
-    gap: 7px;
-  }
-
-  .input-row {
-    margin-bottom: 8px;
-  }
-
-  .action-steps {
-    grid-template-columns: 1fr;
-  }
-
-  .setting-help {
-    grid-template-columns: 1fr;
-  }
-
-  .config-final > div {
-    flex-wrap: wrap;
-  }
-
-  .chapter-content {
-    padding: 0 8px 10px;
-  }
-
-  .sub-body {
-    padding: 10px;
-  }
-
-  .sub-header {
-    padding: 11px;
-  }
-
-  .step {
-    padding-left: 46px;
-  }
-
-  .map-collapse > summary {
-    padding: 11px;
-  }
-
-  .command-box {
-    flex-direction: column;
-  }
-
-  .command-box button {
-    width: 100%;
-  }
-}
-.intro code {
-  display: inline-block;
-  padding: 2px 6px;
-
-  background: #0b0d0f;
-  border: 1px solid #30343a;
-  border-radius: 4px;
-
-  color: #e0e0e0;
-  font-family: Consolas, "Courier New", monospace;
-  font-size: 0.9em;
-  line-height: 1.3;
-
-  vertical-align: baseline;
-
-  transition:
-    background .15s ease,
-    border-color .15s ease,
-    color .15s ease;
-}
-
-/* =====================================================
-   REDUCED MOTION
-   ===================================================== */
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-}
-
-
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rust Server Guide</title>
+	<link rel="stylesheet" href="./stylesheet.css">
 </head>
-
-
 <body>
-
-
-<!-- =====================================================
-     NAVIGATION
-     ===================================================== -->
-
+<!------- NAVBAR ------->
 <nav>
-
-  <div class="inner">
-
-    <a href="#setup">
-      <i data-lucide="download" class="nav-icon"></i>
-      1. Setup
-    </a>
-
-    <a href="#start">
-      <i data-lucide="play" class="nav-icon"></i>
-      2. Start
-    </a>
-
-    <a href="#commands">
-      <i data-lucide="terminal" class="nav-icon"></i>
-      3. Commands
-    </a>
-
-    <a href="#config">
-      <i data-lucide="settings" class="nav-icon"></i>
-      4. Configuration
-    </a>
-
-    <a href="#files">
-      <i data-lucide="folder" class="nav-icon"></i>
-      5. Files
-    </a>
-
-  </div>
-
+	<div class="inner">
+		<a href="#setup">
+			<i data-lucide="download" class="nav-icon"></i>
+			<span>1. Setup</span>
+		</a>
+		<a href="#start">
+			<i data-lucide="play" class="nav-icon"></i>
+			<span>2. Start</span>
+		</a>
+		<a href="#commands">
+			<i data-lucide="terminal" class="nav-icon"></i>
+			<span>3. Commands</span>
+		</a>
+		<a href="#config">
+			<i data-lucide="settings" class="nav-icon"></i>
+			<span>4. Configuration</span>
+		</a>
+		<a href="#files">
+			<i data-lucide="folder" class="nav-icon"></i>
+			<span>5. Files</span>
+		</a>
+	</div>
 </nav>
 
-
 <div class="container">
-
-
-<header id="top">
-
-  <h1>Rust Server Guide</h1>
-
-  <div class="subtitle">
-    Install, start and configure your own Rust dedicated server on Windows.
-  </div>
-
-</header>
+	<header id="top">
+		<h1>Rust Server Guide</h1>
+		<div class="subtitle">
+			Install, start and configure your own Rust dedicated server on Windows.
+		</div>
+	</header>
 
 
 
 <!-- =====================================================
-     CHAPTER 1
-     ===================================================== -->
+	CHAPTER 1
+	===================================================== -->
 
 <section class="chapter" id="setup">
 
-  <h2>
-    <span class="num">1</span>
-    <i data-lucide="download" class="chapter-icon"></i>
-    Setup
-  </h2>
+<h2>
+	<span class="num">1</span>
+	<i data-lucide="download" class="chapter-icon"></i>
+	Setup
+</h2>
 
 
-  <div class="chapter-content">
+<div class="chapter-content">
 
-    <p class="intro">
-      Everything is installed automatically by
-      <code>setup.bat</code>. You only have to run it once.
-    </p>
-
-
-    <!-- SUBSECTION -->
-
-    <div class="sub-section" id="setup-install">
-
-      <div class="sub-header">
-
-        <div class="sub-icon">
-          <i data-lucide="package"></i>
-        </div>
-
-        <div class="sub-header-text">
-
-          <h3>Install the server</h3>
-
-          <p>
-            Download SteamCMD and the Rust dedicated server files.
-          </p>
-
-        </div>
-
-      </div>
+	<p class="intro">
+	Everything is installed automatically by
+	<code>setup.bat</code>. You only have to run it once.
+	</p>
 
 
-      <div class="sub-body">
+	<!-- SUBSECTION -->
 
-        <ol class="steps">
+	<div class="sub-section" id="setup-install">
 
-          <li class="step">
+	<div class="sub-header">
 
-            <h3>Run <code>setup.bat</code></h3>
+		<div class="sub-icon">
+		<i data-lucide="package"></i>
+		</div>
 
-          </li>
+		<div class="sub-header-text">
 
+		<h3>Install the server</h3>
 
-          <li class="step">
+		<p>
+			Download SteamCMD and the Rust dedicated server files.
+		</p>
 
-            <h3>Wait for the download to finish</h3>
+		</div>
 
-            <div class="description">
-              The script downloads <strong>SteamCMD</strong> and the
-              <strong>Rust dedicated server</strong> files.
-              This can take a while.
-              <strong>Do not close the window.</strong>
-            </div>
-
-          </li>
+	</div>
 
 
-          <li class="step">
+	<div class="sub-body">
 
-            <h3>Wait for &laquo;Setup finished!&raquo;</h3>
+		<ol class="steps">
 
-            <div class="description">
-              When you see <code>Setup finished!</code>,
-              press any key to close the window.
-              Your server is now installed.
-            </div>
+		<li class="step">
 
-          </li>
+			<h3>Run <code>setup.bat</code></h3>
 
-        </ol>
-
-      </div>
-
-    </div>
+		</li>
 
 
+		<li class="step">
 
-    <!-- SUBSECTION -->
+			<h3>Wait for the download to finish</h3>
 
-    <div class="sub-section" id="setup-files">
+			<div class="description">
+			The script downloads <strong>SteamCMD</strong> and the
+			<strong>Rust dedicated server</strong> files.
+			This can take a while.
+			<strong>Do not close the window.</strong>
+			</div>
 
-      <div class="sub-header">
-
-        <div class="sub-icon">
-          <i data-lucide="folder-tree"></i>
-        </div>
-
-        <div class="sub-header-text">
-
-          <h3>Check the installed files</h3>
-
-          <p>
-            Your batch files are stored inside
-            <code>rust_server</code>.
-          </p>
-
-        </div>
-
-      </div>
+		</li>
 
 
-      <div class="sub-body">
+		<li class="step">
 
-        <pre class="tree">RustServer/
+			<h3>Wait for &laquo;Setup finished!&raquo;</h3>
+
+			<div class="description">
+			When you see <code>Setup finished!</code>,
+			press any key to close the window.
+			Your server is now installed.
+			</div>
+
+		</li>
+
+		</ol>
+
+	</div>
+
+	</div>
+
+
+
+	<!-- SUBSECTION -->
+
+	<div class="sub-section" id="setup-files">
+
+	<div class="sub-header">
+
+		<div class="sub-icon">
+		<i data-lucide="folder-tree"></i>
+		</div>
+
+		<div class="sub-header-text">
+
+		<h3>Check the installed files</h3>
+
+		<p>
+			Your batch files are stored inside
+			<code>rust_server</code>.
+		</p>
+
+		</div>
+
+	</div>
+
+
+	<div class="sub-body">
+
+		<pre class="tree">RustServer/
 ├── setup.bat
 ├── steamcmd/
 └── <span style="color: red;">rust_server/</span>
-    ├── start_server.bat
-    ├── update_oxide.bat
-    ├── select_version.bat
-    └── server_files/</pre>
+	├── start_server.bat
+	├── update_oxide.bat
+	├── select_version.bat
+	└── server_files/</pre>
 
 
-        <div class="notice info">
+		<div class="notice info">
 
-          <strong>Good to know:</strong>
-          setup.bat only installs the vanilla Rust server.
+		<strong>Good to know:</strong>
+		setup.bat only installs the vanilla Rust server.
 
-          <strong>Oxide</strong> can be installed later with
-          <code>update_oxide.bat</code>.
+		<strong>Oxide</strong> can be installed later with
+		<code>update_oxide.bat</code>.
 
-          See <a class="link" href="#config-oxide">Chapter 4 → Oxide</a>
-          for more information.
+		See <a class="link" href="#config-oxide">Chapter 4 → Oxide</a>
+		for more information.
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
-    <a class="back" href="#top">
-      <i data-lucide="arrow-up" class="icon-small"></i>
-      Back to top
-    </a>
+	<a class="back" href="#top">
+	<i data-lucide="arrow-up" class="icon-small"></i>
+	Back to top
+	</a>
 
-  </div>
+</div>
 
 </section>
 
 
 
 <!-- =====================================================
-     CHAPTER 2
-     ===================================================== -->
+	CHAPTER 2
+	===================================================== -->
 
 <section class="chapter" id="start">
 
-  <h2>
-    <span class="num">2</span>
-    <i data-lucide="play" class="chapter-icon"></i>
-    Start the server
-  </h2>
+<h2>
+	<span class="num">2</span>
+	<i data-lucide="play" class="chapter-icon"></i>
+	Start the server
+</h2>
 
 
-  <div class="chapter-content">
+<div class="chapter-content">
 
-    <p class="intro">
-      Once the setup is finished, choose how you want to continue.
-    </p>
+	<p class="intro">
+	Once the setup is finished, choose how you want to continue.
+	</p>
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="start-choice">
+	<div class="sub-section" id="start-choice">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="route"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="route"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Choose how to continue</h3>
+		<h3>Choose how to continue</h3>
 
-          <p>
-            You can start immediately or configure the server first.
-          </p>
+		<p>
+			You can start immediately or configure the server first.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="choices">
+		<div class="choices">
 
-          <a class="choice" href="#start-now">
+		<a class="choice" href="#start-now">
 
-            <div class="choice-icon">
-              <i data-lucide="play"></i>
-            </div>
+			<div class="choice-icon">
+			<i data-lucide="play"></i>
+			</div>
 
-            <div>
+			<div>
 
-              <div class="tag">Option A</div>
+			<div class="tag">Option A</div>
 
-              <h3>Start right away</h3>
+			<h3>Start right away</h3>
 
-              <p>
-                Launch <code>start_server.bat</code>
-                with the default settings.
-              </p>
+			<p>
+				Launch <code>start_server.bat</code>
+				with the default settings.
+			</p>
 
-            </div>
+			</div>
 
-          </a>
+		</a>
 
 
-          <a class="choice" href="#config">
+		<a class="choice" href="#config">
 
-            <div class="choice-icon">
-              <i data-lucide="settings"></i>
-            </div>
+			<div class="choice-icon">
+			<i data-lucide="settings"></i>
+			</div>
 
-            <div>
+			<div>
 
-              <div class="tag">Option B</div>
+			<div class="tag">Option B</div>
 
-              <h3>Configure first</h3>
+			<h3>Configure first</h3>
 
-              <p>
-                Install Oxide, choose a version or
-                customize the map before launching.
-              </p>
+			<p>
+				Install Oxide, choose a version or
+				customize the map before launching.
+			</p>
 
-            </div>
+			</div>
 
-          </a>
+		</a>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="start-now">
+	<div class="sub-section" id="start-now">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="server"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="server"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Start the server</h3>
+		<h3>Start the server</h3>
 
-          <p>
-            Launch the server and wait until it finishes loading.
-          </p>
+		<p>
+			Launch the server and wait until it finishes loading.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <ol class="steps">
+		<ol class="steps">
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Open the <code>rust_server</code> folder</h3>
+			<h3>Open the <code>rust_server</code> folder</h3>
 
-            <div class="description">
-              Double-click <strong>start_server.bat</strong>.
-            </div>
+			<div class="description">
+			Double-click <strong>start_server.bat</strong>.
+			</div>
 
-          </li>
+		</li>
 
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Wait for the server to load</h3>
+			<h3>Wait for the server to load</h3>
 
-            <div class="description">
-              A console window opens and generates the map
-              on the first launch.
+			<div class="description">
+			A console window opens and generates the map
+			on the first launch.
 
-              This can take a few minutes.
+			This can take a few minutes.
 
-              <br><br>
+			<br><br>
 
-              <strong>Keep this window open</strong>:
-              closing it stops the server.
-            </div>
+			<strong>Keep this window open</strong>:
+			closing it stops the server.
+			</div>
 
-          </li>
+		</li>
 
-        </ol>
+		</ol>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="start-connect">
+	<div class="sub-section" id="start-connect">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="log-in"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="log-in"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Connect to your server</h3>
+		<h3>Connect to your server</h3>
 
-          <p>
-            Connect locally using the Rust F1 console.
-          </p>
+		<p>
+			Connect locally using the Rust F1 console.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="description">
-          Launch Rust or Rust Staging depending on the
-          version you installed.
+		<div class="description">
+		Launch Rust or Rust Staging depending on the
+		version you installed.
 
-          Press <strong>F1</strong> to open the game console
-          and enter:
-        </div>
+		Press <strong>F1</strong> to open the game console
+		and enter:
+		</div>
 
 
-        <div class="command-box">
+		<div class="command-box">
 
-          <code>client.connect localhost</code>
+		<code>client.connect localhost</code>
 
-          <button onclick="copyCommand(this)">
-            COPY
-          </button>
+		<button onclick="copyCommand(this)">
+			COPY
+		</button>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="start-admin">
+	<div class="sub-section" id="start-admin">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="shield"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="shield"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Make yourself admin</h3>
+		<h3>Make yourself admin</h3>
 
-          <p>
-            Give your player server administrator permissions.
-          </p>
+		<p>
+			Give your player server administrator permissions.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="description">
+		<div class="description">
 
-          Go to
-          <a class="link" href="#commands">
-            Chapter 3 → Commands
-          </a>
-          to configure your SteamID and admin commands.
+		Go to
+		<a class="link" href="#commands">
+			Chapter 3 → Commands
+		</a>
+		to configure your SteamID and admin commands.
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
-    <a class="back" href="#top">
-      <i data-lucide="arrow-up" class="icon-small"></i>
-      Back to top
-    </a>
+	<a class="back" href="#top">
+	<i data-lucide="arrow-up" class="icon-small"></i>
+	Back to top
+	</a>
 
-  </div>
+</div>
 
 </section>
 
 
 
 <!-- =====================================================
-     CHAPTER 3
-     ===================================================== -->
+	CHAPTER 3
+	===================================================== -->
 
 <section class="chapter" id="commands">
 
-  <h2>
-    <span class="num">3</span>
-    <i data-lucide="terminal" class="chapter-icon"></i>
-    Commands
-  </h2>
+<h2>
+	<span class="num">3</span>
+	<i data-lucide="terminal" class="chapter-icon"></i>
+	Commands
+</h2>
 
 
-  <div class="chapter-content">
+<div class="chapter-content">
 
-    <p class="intro">
-      Fill in your information once, then copy the generated commands.
-    </p>
+	<p class="intro">
+	Fill in your information once, then copy the generated commands.
+	</p>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="commands-player">
+	<div class="sub-section" id="commands-player">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="user"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="user"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Player information</h3>
+		<h3>Player information</h3>
 
-          <p>
-            Enter the Steam information used by the commands below.
-          </p>
+		<p>
+			Enter the Steam information used by the commands below.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="input-row">
+		<div class="input-row">
 
-          <div class="input-group">
+		<div class="input-group">
 
-            <label>SteamID64 (17-digit number)</label>
+			<label>SteamID64 (17-digit number)</label>
 
-            <input
-              id="steamId"
-              type="text"
-              placeholder="YOUR_STEAMID64"
-              oninput="updateCommands()">
+			<input
+			id="steamId"
+			type="text"
+			placeholder="YOUR_STEAMID64"
+			oninput="updateCommands()">
 
-          </div>
+		</div>
 
 
-          <div class="input-group">
+		<div class="input-group">
 
-            <label>Steam username</label>
+			<label>Steam username</label>
 
-            <input
-              id="username"
-              type="text"
-              placeholder="YOUR_STEAM_USERNAME"
-              oninput="updateCommands()">
+			<input
+			id="username"
+			type="text"
+			placeholder="YOUR_STEAM_USERNAME"
+			oninput="updateCommands()">
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="commands-admin">
+	<div class="sub-section" id="commands-admin">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="shield-check"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="shield-check"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Server administrator</h3>
+		<h3>Server administrator</h3>
 
-          <p>
-            Give yourself Rust server administrator permissions.
-          </p>
+		<p>
+			Give yourself Rust server administrator permissions.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="notice info">
+		<div class="notice info">
 
-          Some commands require privileges.
+		Some commands require privileges.
 
-          If you cannot execute them from the game console,
-          use the <code>server console</code>.
+		If you cannot execute them from the game console,
+		use the <code>server console</code>.
 
-        </div>
+		</div>
 
 
-        <div class="description">
-          Run this command with your SteamID and username:
-        </div>
+		<div class="description">
+		Run this command with your SteamID and username:
+		</div>
 
 
-        <div class="command-box">
+		<div class="command-box">
 
-          <code id="ownerCommand">ownerid YOUR_STEAMID64 YOUR_STEAM_USERNAME</code>
+		<code id="ownerCommand">ownerid YOUR_STEAMID64 YOUR_STEAM_USERNAME</code>
 
-          <button onclick="copyCommand(this)">
-            COPY
-          </button>
+		<button onclick="copyCommand(this)">
+			COPY
+		</button>
 
-        </div>
+		</div>
 
 
-        <div class="sub-label">
-          <i data-lucide="save" class="icon-small"></i>
-          Save the change
-        </div>
+		<div class="sub-label">
+		<i data-lucide="save" class="icon-small"></i>
+		Save the change
+		</div>
 
 
-        <div class="description">
-          Run this afterwards so the admin list is kept after a restart.
-        </div>
+		<div class="description">
+		Run this afterwards so the admin list is kept after a restart.
+		</div>
 
 
-        <div class="command-box">
+		<div class="command-box">
 
-          <code>server.writecfg</code>
+		<code>server.writecfg</code>
 
-          <button onclick="copyCommand(this)">
-            COPY
-          </button>
+		<button onclick="copyCommand(this)">
+			COPY
+		</button>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="commands-oxide">
+	<div class="sub-section" id="commands-oxide">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="puzzle"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="puzzle"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Oxide commands</h3>
+		<h3>Oxide commands</h3>
 
-          <p>
-            Check Oxide and configure its administrator group.
-          </p>
+		<p>
+			Check Oxide and configure its administrator group.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="card">
+		<div class="card">
 
-          <h3>Check if Oxide is installed</h3>
+		<h3>Check if Oxide is installed</h3>
 
-          <div class="description">
-            If the command is unknown, Oxide is not installed yet.
-          </div>
+		<div class="description">
+			If the command is unknown, Oxide is not installed yet.
+		</div>
 
-          <div class="command-box">
+		<div class="command-box">
 
-            <code>oxide.version</code>
+			<code>oxide.version</code>
 
-            <button onclick="copyCommand(this)">
-              COPY
-            </button>
+			<button onclick="copyCommand(this)">
+			COPY
+			</button>
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
 
-        <div class="card">
+		<div class="card">
 
-          <h3>Grant access to the admin group</h3>
+		<h3>Grant access to the admin group</h3>
 
-          <div class="description">
-            Give the Oxide admin group access to every permission.
-          </div>
+		<div class="description">
+			Give the Oxide admin group access to every permission.
+		</div>
 
-          <div class="command-box">
+		<div class="command-box">
 
-            <code>oxide.grant group admin *</code>
+			<code>oxide.grant group admin *</code>
 
-            <button onclick="copyCommand(this)">
-              COPY
-            </button>
+			<button onclick="copyCommand(this)">
+			COPY
+			</button>
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
-        <div class="card">
+		<div class="card">
 
-          <h3>Grant all permission to a User</h3>
+		<h3>Grant all permission to a User</h3>
 
-          <div class="description">
-            Give the Oxide User access to every permission.
-          </div>
+		<div class="description">
+			Give the Oxide User access to every permission.
+		</div>
 
-          <div class="command-box">
+		<div class="command-box">
 
-            <code id="oxideUserGrantCommand">oxide.grant user YOUR_STEAM_USERNAME *</code>
+			<code id="oxideUserGrantCommand">oxide.grant user YOUR_STEAM_USERNAME *</code>
 
-            <button onclick="copyCommand(this)">
-              COPY
-            </button>
+			<button onclick="copyCommand(this)">
+			COPY
+			</button>
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
 
-        <div class="card" style="margin-bottom:0;">
+		<div class="card" style="margin-bottom:0;">
 
-          <h3>Add yourself to the admin group</h3>
+		<h3>Add yourself to the admin group</h3>
 
-          <div class="description">
-            Add the player from the information above
-            to the Oxide admin group.
-          </div>
+		<div class="description">
+			Add the player from the information above
+			to the Oxide admin group.
+		</div>
 
-          <div class="command-box">
+		<div class="command-box">
 
-            <code id="oxideGroupGrantCommand">oxide.usergroup add YOUR_STEAM_USERNAME admin</code>
+			<code id="oxideGroupGrantCommand">oxide.usergroup add YOUR_STEAM_USERNAME admin</code>
 
-            <button onclick="copyCommand(this)">
-              COPY
-            </button>
+			<button onclick="copyCommand(this)">
+			COPY
+			</button>
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
-    <a class="back" href="#top">
-      <i data-lucide="arrow-up" class="icon-small"></i>
-      Back to top
-    </a>
+	<a class="back" href="#top">
+	<i data-lucide="arrow-up" class="icon-small"></i>
+	Back to top
+	</a>
 
-  </div>
+</div>
 
 </section>
 
 
 
 <!-- =====================================================
-     CHAPTER 4
-     ===================================================== -->
+	CHAPTER 4
+	===================================================== -->
 
 <section class="chapter" id="config">
 
-  <h2>
-    <span class="num">4</span>
-    <i data-lucide="settings" class="chapter-icon"></i>
-    Further configuration
-  </h2>
+<h2>
+	<span class="num">4</span>
+	<i data-lucide="settings" class="chapter-icon"></i>
+	Further configuration
+</h2>
 
 
-  <div class="chapter-content">
+<div class="chapter-content">
 
-    <p class="intro">
-      Configure your server after the basic installation.
-      Choose what you want to change below.
-    </p>
+	<p class="intro">
+	Configure your server after the basic installation.
+	Choose what you want to change below.
+	</p>
 
 
-    <!-- CONFIGURATION OVERVIEW -->
+	<!-- CONFIGURATION OVERVIEW -->
 
-    <div class="config-overview">
+	<div class="config-overview">
 
-      <div class="config-overview-title">
+	<div class="config-overview-title">
 
-        <span>Configuration</span>
+		<span>Configuration</span>
 
-        <small>
-          Choose what you want to change
-        </small>
+		<small>
+		Choose what you want to change
+		</small>
 
-      </div>
+	</div>
 
 
-      <div class="config-overview-grid">
+	<div class="config-overview-grid">
 
-        <a class="config-nav-card" href="#config-oxide">
+		<a class="config-nav-card" href="#config-oxide">
 
-          <span class="config-nav-number">01</span>
+		<span class="config-nav-number">01</span>
 
-          <div>
+		<div>
 
-            <strong>Install Oxide</strong>
+			<strong>Install Oxide</strong>
 
-            <p>
-              Use plugins and server modifications.
-            </p>
+			<p>
+			Use plugins and server modifications.
+			</p>
 
-          </div>
+		</div>
 
-        </a>
+		</a>
 
 
-        <a class="config-nav-card" href="#config-version">
+		<a class="config-nav-card" href="#config-version">
 
-          <span class="config-nav-number">02</span>
+		<span class="config-nav-number">02</span>
 
-          <div>
+		<div>
 
-            <strong>Choose a version</strong>
+			<strong>Choose a version</strong>
 
-            <p>
-              Switch between Rust branches.
-            </p>
+			<p>
+			Switch between Rust branches.
+			</p>
 
-          </div>
+		</div>
 
-        </a>
+		</a>
 
 
-        <a class="config-nav-card" href="#config-start">
+		<a class="config-nav-card" href="#config-start">
 
-          <span class="config-nav-number">03</span>
+		<span class="config-nav-number">03</span>
 
-          <div>
+		<div>
 
-            <strong>Server settings</strong>
+			<strong>Server settings</strong>
 
-            <p>
-              Change the map and startup settings.
-            </p>
+			<p>
+			Change the map and startup settings.
+			</p>
 
-          </div>
+		</div>
 
-        </a>
+		</a>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
-    <div class="notice">
+	<div class="notice">
 
-      <strong>Before changing anything:</strong>
+	<strong>Before changing anything:</strong>
 
-      Stop the server first.
+	Stop the server first.
 
-      Close the server console or type <code>quit</code>.
+	Close the server console or type <code>quit</code>.
 
-    </div>
+	</div>
 
 
 
-    <!-- OXIDE -->
+	<!-- OXIDE -->
 
-    <div class="sub-section" id="config-oxide">
+	<div class="sub-section" id="config-oxide">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="puzzle"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="puzzle"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Install or update Oxide</h3>
+		<h3>Install or update Oxide</h3>
 
-          <p>
-            Install the modding framework required for Rust plugins.
-          </p>
+		<p>
+			Install the modding framework required for Rust plugins.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="config-purpose">
+		<div class="config-purpose">
 
-          <strong>What is Oxide?</strong>
+		<strong>What is Oxide?</strong>
 
-          <span>
-            Oxide (uMod) is the modding framework used
-            to run Rust plugins.
+		<span>
+			Oxide (uMod) is the modding framework used
+			to run Rust plugins.
 
-            If you only want a completely vanilla server,
-            you do not need it.
-          </span>
+			If you only want a completely vanilla server,
+			you do not need it.
+		</span>
 
-        </div>
+		</div>
 
 
-        <ol class="steps">
+		<ol class="steps">
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Stop the server</h3>
+			<h3>Stop the server</h3>
 
-            <div class="description">
-              Close the server console or type <code>quit</code>.
-            </div>
+			<div class="description">
+			Close the server console or type <code>quit</code>.
+			</div>
 
-          </li>
+		</li>
 
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Run <code>update_oxide.bat</code></h3>
+			<h3>Run <code>update_oxide.bat</code></h3>
 
-            <div class="description">
-              Double-click the file inside your
-              <code>rust_server</code> folder.
-            </div>
+			<div class="description">
+			Double-click the file inside your
+			<code>rust_server</code> folder.
+			</div>
 
-          </li>
+		</li>
 
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Wait for the update to finish</h3>
+			<h3>Wait for the update to finish</h3>
 
-            <div class="description">
-              Wait until the script reports:
-              <code>Oxide update finished successfully.</code>
-            </div>
+			<div class="description">
+			Wait until the script reports:
+			<code>Oxide update finished successfully.</code>
+			</div>
 
-          </li>
+		</li>
 
 
-          <li class="step">
+		<li class="step">
 
-            <h3>Start the server again</h3>
+			<h3>Start the server again</h3>
 
-            <div class="description">
-              Launch <code>start_server.bat</code>
-              and verify the installation with
-              <code>oxide.version</code>.
-            </div>
+			<div class="description">
+			Launch <code>start_server.bat</code>
+			and verify the installation with
+			<code>oxide.version</code>.
+			</div>
 
-          </li>
+		</li>
 
-        </ol>
+		</ol>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- VERSION -->
+	<!-- VERSION -->
 
-    <div class="sub-section" id="config-version">
+	<div class="sub-section" id="config-version">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="git-branch"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="git-branch"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Choose the Rust version</h3>
+		<h3>Choose the Rust version</h3>
 
-          <p>
-            Switch between the Main, Staging and Beta branches.
-          </p>
+		<p>
+			Switch between the Main, Staging and Beta branches.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-      
+	
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        
-        <div class="config-action">
+		
+		<div class="config-action">
 
-          <div class="config-action-title">
+		<div class="config-action-title">
 
-            <span>How to change the version</span>
+			<span>How to change the version</span>
 
-            <small>3 steps</small>
+			<small>3 steps</small>
 
-          </div>
+		</div>
 
 
-          <div class="action-steps">
+		<div class="action-steps">
 
-            <div>
-              <b>1</b>
-              <span>Stop the server.</span>
-            </div>
+			<div>
+			<b>1</b>
+			<span>Stop the server.</span>
+			</div>
 
-            <div>
-              <b>2</b>
-              <span>Run <code>select_version.bat</code>.</span>
-            </div>
+			<div>
+			<b>2</b>
+			<span>Run <code>select_version.bat</code>.</span>
+			</div>
 
-            <div>
-              <b>3</b>
-              <span>Select the branch and wait for SteamCMD.</span>
-            </div>
+			<div>
+			<b>3</b>
+			<span>Select the branch and wait for SteamCMD.</span>
+			</div>
 
-          </div>
+		</div>
 
-        </div>
-        <br>
+		</div>
+		<br>
 
-        <div>Branches:</div>
-        <div class="version-list">            
+		<div>Branches:</div>
+		<div class="version-list">            
 
-          <div class="version-card version-main">
+		<div class="version-card version-main">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">1</span>
+			<span class="version-number">1</span>
 
-              <div class="version-name">
+			<div class="version-name">
 
-                <strong>Main</strong>
+				<strong>Main</strong>
 
-                <span class="version-badge">
-                  PUBLIC
-                </span>
+				<span class="version-badge">
+				PUBLIC
+				</span>
 
-              </div>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              The normal public Rust version.
-              This is the standard choice for a regular server.
-            </p>
+			<p>
+			The normal public Rust version.
+			This is the standard choice for a regular server.
+			</p>
 
-            <div class="version-note">
-              Works with Oxide.
-            </div>
+			<div class="version-note">
+			Works with Oxide.
+			</div>
 
-          </div>
+		</div>
 
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">2</span>
+			<span class="version-number">2</span>
 
-              <div class="version-name">
+			<div class="version-name">
 
-                <strong>Staging</strong>
+				<strong>Staging</strong>
 
-                <span class="version-badge">
-                  TESTING
-                </span>
+				<span class="version-badge">
+				TESTING
+				</span>
 
-              </div>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              The upcoming Rust version used for testing
-              before changes reach the public branch.
-            </p>
+			<p>
+			The upcoming Rust version used for testing
+			before changes reach the public branch.
+			</p>
 
-            <div class="version-note warning">
-              May not work with Oxide.
-            </div>
+			<div class="version-note warning">
+			May not work with Oxide.
+			</div>
 
-          </div>
+		</div>
 
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">3</span>
+			<span class="version-number">3</span>
 
-              <div class="version-name">
+			<div class="version-name">
 
-                <strong>Public Beta</strong>
+				<strong>Public Beta</strong>
 
-                <span class="version-badge">
-                  BETA
-                </span>
+				<span class="version-badge">
+				BETA
+				</span>
 
-              </div>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Enter the name of a public beta branch
-              when prompted by the script.
-            </p>
+			<p>
+			Enter the name of a public beta branch
+			when prompted by the script.
+			</p>
 
-            <div class="version-note warning">
-              May not work with Oxide.
-            </div>
+			<div class="version-note warning">
+			May not work with Oxide.
+			</div>
 
-          </div>
+		</div>
 
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">4</span>
+			<span class="version-number">4</span>
 
-              <div class="version-name">
+			<div class="version-name">
 
-                <strong>Private Beta</strong>
+				<strong>Private Beta</strong>
 
-                <span class="version-badge">
-                  BETA
-                </span>
+				<span class="version-badge">
+				BETA
+				</span>
 
-              </div>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Enter the branch name and its password
-              when prompted by the script.
-            </p>
+			<p>
+			Enter the branch name and its password
+			when prompted by the script.
+			</p>
 
-            <div class="version-note warning">
-              May not work with Oxide.
-            </div>
+			<div class="version-note warning">
+			May not work with Oxide.
+			</div>
 
-          </div>
+		</div>
 
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">5</span>
+			<span class="version-number">5</span>
 
-              <div class="version-name">
+			<div class="version-name">
 
-                <strong>Exit</strong>
+				<strong>Exit</strong>
 
-              </div>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Close the menu without changing anything.
-            </p>
+			<p>
+			Close the menu without changing anything.
+			</p>
 
-          </div>
+		</div>
 
 
-        </div>
+		</div>
 
-        <div class="notice">
+		<div class="notice">
 
-          <strong>Important:</strong>
+		<strong>Important:</strong>
 
-          If you change the Rust version,
-          run <code>update_oxide.bat</code> again afterwards.
+		If you change the Rust version,
+		run <code>update_oxide.bat</code> again afterwards.
 
-          Changing branches can overwrite Oxide files.
+		Changing branches can overwrite Oxide files.
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SERVER SETTINGS -->
+	<!-- SERVER SETTINGS -->
 
-    <div class="sub-section" id="config-start">
+	<div class="sub-section" id="config-start">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="sliders-horizontal"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="sliders-horizontal"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Server settings</h3>
+		<h3>Server settings</h3>
 
-          <p>
-            Change how the server starts and which map it loads.
-          </p>
+		<p>
+			Change how the server starts and which map it loads.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    <div class="sub-body">
+	<div class="sub-body">
 
-    <div class="config-purpose">
-        <span>
-        For this, you will need to edit your <code>start_server.bat</code> file.
-        </span>
-    </div>
+	<div class="config-purpose">
+		<span>
+		For this, you will need to edit your <code>start_server.bat</code> file.
+		</span>
+	</div>
 
-    <br>
+	<br>
 
-    <div class="setting-block custom-map">
+	<div class="setting-block custom-map">
 
-        <div class="setting-header">
-        <div>
-            <span class="setting-label">STARTUP CONFIGURATION</span>
-        </div>
-        <span class="setting-custom">EDIT</span>
-        </div>
+		<div class="setting-header">
+		<div>
+			<span class="setting-label">STARTUP CONFIGURATION</span>
+		</div>
+		<span class="setting-custom">EDIT</span>
+		</div>
 
-        <div class="code-label">
-        Your <code>start_server.bat</code> should look like this:
-        </div>
+		<div class="code-label">
+		Your <code>start_server.bat</code> should look like this:
+		</div>
 
-        <div class="command-box">
-        <code>@echo off
+		<div class="command-box">
+		<code>@echo off
 cd ./server_files/
 RustDedicated.exe ^
 -batchmode ^
@@ -3246,13 +1226,13 @@ RustDedicated.exe ^
 +server.seed 2147483647 ^
 +server.worldsize 1000 ^
 +server.maxplayers 10</code>
-    </div>
+	</div>
 <div>
-            <span class="setting-label">^ = new line</span>
-        </div>
+			<span class="setting-label">^ = new line</span>
+		</div>
 
-  </div>
- <br>
+</div>
+<br>
 
 
 
@@ -3260,53 +1240,53 @@ RustDedicated.exe ^
 
 <details class="map-collapse">
 
-  <summary>
-    <div class="map-summary-title">
-      <span class="setting-label">MAP TYPE</span>
-      <h4>Procedural Map</h4>
-    </div>
-  </summary>
+<summary>
+	<div class="map-summary-title">
+	<span class="setting-label">MAP TYPE</span>
+	<h4>Procedural Map</h4>
+	</div>
+</summary>
 
-  <div class="map-collapse-content">
+<div class="map-collapse-content">
 
-    <p>
-      Let Rust generate a map automatically
-      using a seed and world size.
-    </p>
+	<p>
+	Let Rust generate a map automatically
+	using a seed and world size.
+	</p>
 
-    <div class="code-label">
-      Keep these settings:
-    </div>
+	<div class="code-label">
+	Keep these settings:
+	</div>
 
-    <div class="command-box">
-      <code>+server.level "Procedural Map"
+	<div class="command-box">
+	<code>+server.level "Procedural Map"
 +server.seed 2147483647
 +server.worldsize 1000</code>
 
-      <button onclick="copyCommand(this)">
-        COPY
-      </button>
-    </div>
+	<button onclick="copyCommand(this)">
+		COPY
+	</button>
+	</div>
 
-    <div class="setting-help">
+	<div class="setting-help">
 
-      <div>
-        <strong>Seed</strong>
-        <span>
-          Controls which procedural map is generated.
-        </span>
-      </div>
+	<div>
+		<strong>Seed</strong>
+		<span>
+		Controls which procedural map is generated.
+		</span>
+	</div>
 
-      <div>
-        <strong>World size</strong>
-        <span>
-          Controls the size of the generated map.
-        </span>
-      </div>
+	<div>
+		<strong>World size</strong>
+		<span>
+		Controls the size of the generated map.
+		</span>
+	</div>
 
-    </div>
+	</div>
 
-  </div>
+</div>
 
 </details>
 
@@ -3315,131 +1295,131 @@ RustDedicated.exe ^
 
 <details class="map-collapse" id="config-custom-map">
 
-  <summary>
-    <div class="map-summary-title">
-      <span class="setting-label">MAP TYPE</span>
-      <h4>Custom Map</h4>
-    </div>
+<summary>
+	<div class="map-summary-title">
+	<span class="setting-label">MAP TYPE</span>
+	<h4>Custom Map</h4>
+	</div>
 
-   
-  </summary>
 
-  <div class="map-collapse-content">
+</summary>
 
-    <p>
-      Use an existing Rust custom map instead of generating
-      a procedural map.
-    </p>
+<div class="map-collapse-content">
 
-    <!-- GET MAP -->
+	<p>
+	Use an existing Rust custom map instead of generating
+	a procedural map.
+	</p>
 
-    <div class="card" style="margin-bottom:10px;">
+	<!-- GET MAP -->
 
-      <h3>Get the map from a server</h3>
+	<div class="card" style="margin-bottom:10px;">
 
-      <div class="description">
-        If you are playing on a server that uses a custom map,
-        you can check which map the server is using from the
-        Rust F1 console.
-      </div>
+	<h3>Get the map from a server</h3>
 
-      <ol class="steps">
+	<div class="description">
+		If you are playing on a server that uses a custom map,
+		you can check which map the server is using from the
+		Rust F1 console.
+	</div>
 
-        <li class="step">
-          <h3>Join the server</h3>
+	<ol class="steps">
 
-          <div class="description">
-            Connect to the Rust server whose map you want to obtain.
-          </div>
-        </li>
+		<li class="step">
+		<h3>Join the server</h3>
 
-        <li class="step">
-          <h3>Open the F1 console</h3>
+		<div class="description">
+			Connect to the Rust server whose map you want to obtain.
+		</div>
+		</li>
 
-          <div class="description">
-            Press <strong>F1</strong> while you are connected
-            to the server.
-          </div>
-        </li>
+		<li class="step">
+		<h3>Open the F1 console</h3>
 
-        <li class="step">
+		<div class="description">
+			Press <strong>F1</strong> while you are connected
+			to the server.
+		</div>
+		</li>
 
-          <h3>Check the server information</h3>
+		<li class="step">
 
-          <div class="description">
-            Use the F1 console to inspect the server information
-            and identify the map being used.
-          </div>
+		<h3>Check the server information</h3>
 
-          <img
-            class="step-image"
-            src="images/console.png"
-            alt="Rust F1 console"
-          >
+		<div class="description">
+			Use the F1 console to inspect the server information
+			and identify the map being used.
+		</div>
 
-        </li>
+		<img
+			class="step-image"
+			src="images/console.png"
+			alt="Rust F1 console"
+		>
 
-      </ol>
+		</li>
 
-    </div>
+	</ol>
 
-    <!-- INSTALL -->
+	</div>
 
-    <div class="card" style="margin-bottom:10px;">
+	<!-- INSTALL -->
 
-      <h3>Use the map on your server</h3>
+	<div class="card" style="margin-bottom:10px;">
 
-      <div class="description">
-        Once you have a direct URL to the
-        <code>.map</code> file, put it in your
-        <code>start_server.bat</code>.
-      </div>
+	<h3>Use the map on your server</h3>
 
-      <div class="code-label">
-        Use:
-      </div>
+	<div class="description">
+		Once you have a direct URL to the
+		<code>.map</code> file, put it in your
+		<code>start_server.bat</code>.
+	</div>
 
-      <div class="command-box">
+	<div class="code-label">
+		Use:
+	</div>
 
-        <code>+server.levelurl "https://maps.rustmaps.com/288/e9ba372f1b224bde83ce68f7ce591864/procedural__4555_55mQZn0PsUm6EKRCl0x3GQ.map"</code>
+	<div class="command-box">
 
-        <button onclick="copyCommand(this)">
-          COPY
-        </button>
+		<code>+server.levelurl "https://maps.rustmaps.com/288/e9ba372f1b224bde83ce68f7ce591864/procedural__4555_55mQZn0PsUm6EKRCl0x3GQ.map"</code>
 
-      </div>
+		<button onclick="copyCommand(this)">
+		COPY
+		</button>
 
-    </div>
+	</div>
 
-    <!-- IMPORTANT -->
+	</div>
 
-    <div class="notice">
+	<!-- IMPORTANT -->
 
-      <strong>Do not keep both configurations.</strong>
+	<div class="notice">
 
-      When using a custom map, remove the procedural map settings:
+	<strong>Do not keep both configurations.</strong>
 
-      <br><br>
+	When using a custom map, remove the procedural map settings:
 
-      <code>+server.level</code>
-      <code>+server.seed</code>
-      <code>+server.worldsize</code>
+	<br><br>
 
-      <br><br>
+	<code>+server.level</code>
+	<code>+server.seed</code>
+	<code>+server.worldsize</code>
 
-      Your startup configuration should use
-      <code>+server.levelurl</code>
-      instead.
+	<br><br>
 
-    </div>
+	Your startup configuration should use
+	<code>+server.levelurl</code>
+	instead.
 
-    <div class="notice info">
+	</div>
 
-      If you're a content creator, Custom Maps are perfect for creating cinematics on the same map where you recorded your gameplay.
+	<div class="notice info">
 
-    </div>
+	If you're a content creator, Custom Maps are perfect for creating cinematics on the same map where you recorded your gameplay.
 
-  </div>
+	</div>
+
+</div>
 
 </details>
 
@@ -3449,526 +1429,218 @@ RustDedicated.exe ^
 
 
 <!-- =====================================================
-     CHAPTER 5
-     ===================================================== -->
+	CHAPTER 5
+	===================================================== -->
 
 <section class="chapter" id="files">
 
-  <h2>
-    <span class="num">5</span>
-    <i data-lucide="folder" class="chapter-icon"></i>
-    Server files
-  </h2>
+<h2>
+	<span class="num">5</span>
+	<i data-lucide="folder" class="chapter-icon"></i>
+	Server files
+</h2>
 
 
-  <div class="chapter-content">
+<div class="chapter-content">
 
-    <p class="intro">
-      Everything related to the actual Rust server
-      is stored inside <code>server_files</code>.
-    </p>
-
-
-
-    <!-- SUBSECTION -->
-
-    <div class="sub-section" id="files-structure">
-
-      <div class="sub-header">
-
-        <div class="sub-icon">
-          <i data-lucide="folder-tree"></i>
-        </div>
-
-        <div class="sub-header-text">
-
-          <h3>Server folder structure</h3>
-
-          <p>
-            The server executable and its data are stored here.
-          </p>
-
-        </div>
-
-      </div>
+	<p class="intro">
+	Everything related to the actual Rust server
+	is stored inside <code>server_files</code>.
+	</p>
 
 
-      <div class="sub-body">
 
-        <pre class="tree">rust_server/
+	<!-- SUBSECTION -->
+
+	<div class="sub-section" id="files-structure">
+
+	<div class="sub-header">
+
+		<div class="sub-icon">
+		<i data-lucide="folder-tree"></i>
+		</div>
+
+		<div class="sub-header-text">
+
+		<h3>Server folder structure</h3>
+
+		<p>
+			The server executable and its data are stored here.
+		</p>
+
+		</div>
+
+	</div>
+
+
+	<div class="sub-body">
+
+		<pre class="tree">rust_server/
 └── server_files/
-    ├── RustDedicated.exe
-    ├── RustDedicated_Data/
-    ├── server/
-    └── oxide/
-        ├── plugins/
-        ├── config/
-        ├── data/
-        └── logs/</pre>
+	├── RustDedicated.exe
+	├── RustDedicated_Data/
+	├── server/
+	└── oxide/
+		├── plugins/
+		├── config/
+		├── data/
+		└── logs/</pre>
 
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="files-important">
+	<div class="sub-section" id="files-important">
 
-      <div class="sub-header">
+	<div class="sub-header">
 
-        <div class="sub-icon">
-          <i data-lucide="file-cog"></i>
-        </div>
+		<div class="sub-icon">
+		<i data-lucide="file-cog"></i>
+		</div>
 
-        <div class="sub-header-text">
+		<div class="sub-header-text">
 
-          <h3>Important files</h3>
+		<h3>Important files</h3>
 
-          <p>
-            The files you will interact with most often.
-          </p>
+		<p>
+			The files you will interact with most often.
+		</p>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
 
-      <div class="sub-body">
+	<div class="sub-body">
 
-        <div class="version-list">
+		<div class="version-list">
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">
-                <i data-lucide="play" class="icon-small"></i>
-              </span>
+			<span class="version-number">
+				<i data-lucide="play" class="icon-small"></i>
+			</span>
 
-              <div class="version-name">
-                <strong>start_server.bat</strong>
-              </div>
+			<div class="version-name">
+				<strong>start_server.bat</strong>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Starts the Rust dedicated server
-              using your configured settings.
-            </p>
+			<p>
+			Starts the Rust dedicated server
+			using your configured settings.
+			</p>
 
-          </div>
+		</div>
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">
-                <i data-lucide="puzzle" class="icon-small"></i>
-              </span>
+			<span class="version-number">
+				<i data-lucide="puzzle" class="icon-small"></i>
+			</span>
 
-              <div class="version-name">
-                <strong>update_oxide.bat</strong>
-              </div>
+			<div class="version-name">
+				<strong>update_oxide.bat</strong>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Installs or updates Oxide after
-              Rust updates.
-            </p>
+			<p>
+			Installs or updates Oxide after
+			Rust updates.
+			</p>
 
-          </div>
+		</div>
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">
-                <i data-lucide="git-branch" class="icon-small"></i>
-              </span>
+			<span class="version-number">
+				<i data-lucide="git-branch" class="icon-small"></i>
+			</span>
 
-              <div class="version-name">
-                <strong>select_version.bat</strong>
-              </div>
+			<div class="version-name">
+				<strong>select_version.bat</strong>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              Switches between Rust server branches.
-            </p>
+			<p>
+			Switches between Rust server branches.
+			</p>
 
-          </div>
+		</div>
 
 
-          <div class="version-card">
+		<div class="version-card">
 
-            <div class="version-top">
+			<div class="version-top">
 
-              <span class="version-number">
-                <i data-lucide="box" class="icon-small"></i>
-              </span>
+			<span class="version-number">
+				<i data-lucide="box" class="icon-small"></i>
+			</span>
 
-              <div class="version-name">
-                <strong>RustDedicated.exe</strong>
-              </div>
+			<div class="version-name">
+				<strong>RustDedicated.exe</strong>
+			</div>
 
-            </div>
+			</div>
 
-            <p>
-              The main executable used to run
-              the dedicated server.
-            </p>
+			<p>
+			The main executable used to run
+			the dedicated server.
+			</p>
 
-          </div>
+		</div>
 
-        </div>
+		</div>
 
-      </div>
+	</div>
 
-    </div>
+	</div>
 
 
 
-    <!-- SUBSECTION -->
+	<!-- SUBSECTION -->
 
-    <div class="sub-section" id="files-notes">
-
-      <div class="sub-header">
-
-        <div class="sub-icon">
-          <i data-lucide="info"></i>
-        </div>
-
-        <div class="sub-header-text">
-
-          <h3>Good to know</h3>
-
-          <p>
-            A few things to keep in mind when browsing the files.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="sub-body">
-
-        <div class="notice info">
-
-          <ul style="margin:0; padding-left:18px;">
-
-            <li>
-              Everything the server needs is inside
-              <code>server_files</code>.
-            </li>
-
-            <li>
-              The batch files stay next to
-              <code>server_files</code>.
-            </li>
-
-            <li>
-              Some folders only appear after the first launch
-              or after installing Oxide.
-            </li>
-
-          </ul>
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <a class="back" href="#top">
-      <i data-lucide="arrow-up" class="icon-small"></i>
-      Back to top
-    </a>
-
-  </div>
-
-</section>
-
-
-</div>
-
-
-
-<!-- =====================================================
-     LUCIDE ICONS
-     ===================================================== -->
-
-<script src="https://unpkg.com/lucide@latest"></script>
-
-
-<script>
-
-/* =====================================================
-   SCREENSHOTS
-   ===================================================== */
-
-document.querySelectorAll('.shot').forEach(function (el) {
-
-  var src = el.getAttribute('data-src');
-
-  var label =
-    el.getAttribute('data-label') || 'Screenshot';
-
-
-  el.innerHTML =
-    '<div class="ph">' +
-      '<span></span>' +
-      '<small></small>' +
-    '</div>';
-
-
-  el.querySelector('.ph span').textContent = label;
-
-  el.querySelector('.ph small').textContent = src;
-
-
-  var img = new Image();
-
-  img.alt = label;
-
-
-  img.onload = function () {
-
-    el.innerHTML = '';
-
-    el.classList.add('loaded');
-
-    el.appendChild(img);
-
-  };
-
-
-  img.src = src;
-
-});
-
-
-
-/* =====================================================
-   CHAPTER COLLAPSING
-   ===================================================== */
-
-document.querySelectorAll('.chapter > h2').forEach(function (title) {
-
-  title.addEventListener('click', function () {
-
-    var chapter = title.parentElement;
-
-    var wasOpen =
-      chapter.classList.contains('open');
-
-
-    document.querySelectorAll('.chapter').forEach(function (otherChapter) {
-
-      otherChapter.classList.remove('open');
-
-    });
-
-
-    if (!wasOpen) {
-
-      chapter.classList.add('open');
-
-    }
-
-  });
-
-});
-
-
-
-/* =====================================================
-   NAVIGATION
-   ===================================================== */
-
-document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-
-  link.addEventListener('click', function (event) {
-
-    var targetId =
-      link.getAttribute('href');
-
-
-    var target =
-      document.querySelector(targetId);
-
-
-    if (!target) {
-      return;
-    }
-
-
-    var chapter =
-      target.classList.contains('chapter')
-        ? target
-        : target.closest('.chapter');
-
-
-    if (!chapter) {
-      return;
-    }
-
-
-    event.preventDefault();
-
-
-    document.querySelectorAll('.chapter').forEach(function (otherChapter) {
-
-      otherChapter.classList.remove('open');
-
-    });
-
-
-    chapter.classList.add('open');
-
-
-    setTimeout(function () {
-
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-
-    }, 50);
-
-  });
-
-});
-
-
-
-/* =====================================================
-   COMMAND INPUTS
-   ===================================================== */
-
-function updateCommands() {
-
-  var steamId =
-    document.getElementById("steamId").value.trim();
-
-
-  var username =
-    document.getElementById("username").value.trim();
-
-
-  document.getElementById("ownerCommand").textContent =
-    "ownerid " +
-    (steamId || "YOUR_STEAMID64") +
-    " " +
-    (username || "YOUR_STEAM_USERNAME");
-
-
-  document.getElementById("oxideUserGrantCommand").textContent =
-    "oxide.grant user " +
-    (username || "YOUR_STEAM_USERNAME") +
-    " *";
-
-
-  document.getElementById("oxideGroupGrantCommand").textContent =
-    "oxide.usergroup add " +
-    (username || "YOUR_STEAM_USERNAME") +
-    " admin";
-
-}
-
-
-
-/* =====================================================
-   COPY COMMAND
-   ===================================================== */
-
-function copyCommand(button) {
-
-  var command =
-    button.parentElement.querySelector("code").innerText;
-
-
-  function done() {
-
-    button.innerText = "COPIED!";
-
-    button.classList.add("copied");
-
-
-    setTimeout(function () {
-
-      button.innerText = "COPY";
-
-      button.classList.remove("copied");
-
-    }, 1200);
-
-  }
-
-
-  if (
-    navigator.clipboard &&
-    navigator.clipboard.writeText
-  ) {
-
-    navigator.clipboard
-      .writeText(command)
-      .then(done)
-      .catch(fallback);
-
-  }
-
-  else {
-
-    fallback();
-
-  }
-
-
-  function fallback() {
-
-    var textarea =
-      document.createElement("textarea");
-
-
-    textarea.value = command;
-
-
-    document.body.appendChild(textarea);
-
-
-    textarea.select();
-
-
-    document.execCommand("copy");
-
-
-    textarea.remove();
-
-
-    done();
-
-  }
-
-}
-
-
-
-/* =====================================================
-   INITIALIZE LUCIDE
-   ===================================================== */
-
-lucide.createIcons();
-
-</script>
-
-</body>
+					<div class="sub-section" id="files-notes">
+						<div class="sub-header">
+							<div class="sub-icon">
+								<i data-lucide="info"></i>
+							</div>
+							<div class="sub-header-text">
+								<h3>Good to know</h3>
+								<p>A few things to keep in mind when browsing the files.</p>
+							</div>
+						</div>
+						<div class="sub-body">
+							<div class="notice info">
+								<ul style="margin:0; padding-left:18px;">
+									<li>Everything the server needs is inside <code>server_files</code>.</li>
+									<li>The batch files stay next to <code>server_files</code>.</li>
+									<li>Some folders only appear after the first launch	or after installing Oxide.</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<a class="back" href="#top"><i data-lucide="arrow-up" class="icon-small"></i>Back to top</a>
+				</div>
+			</section>
+		</div>
+		<script src="https://unpkg.com/lucide@latest"></script>
+		<script src="script.js"></script>
+	</body>
 </html>
-
