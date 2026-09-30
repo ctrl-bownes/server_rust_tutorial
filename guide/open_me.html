@@ -326,7 +326,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!-- Admin -->
 				<div class="sub-section" id="commands-admin">
 					<div class="sub-header">
@@ -338,15 +337,9 @@
 							<p>Give yourself Rust server administrator permissions.</p>
 						</div>
 					</div>
+					
 
 					<div class="sub-body">
-						<div class="notice info">
-							Some commands require privileges.
-
-							If you cannot execute them from the game console,
-							use the <code>server console</code>.
-						</div>
-
 						<div class="description">
 							Run this command with your SteamID and username:
 						</div>
@@ -430,6 +423,11 @@
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="notice info">
+					Some commands require privileges.
+					If you cannot execute them from the game console,
+					use the <code>server console</code>.
 				</div>
 			</div>
 		</section>
@@ -1100,6 +1098,611 @@ RustDedicated.exe ^
 				</div>
 			</div>
 		</section>
+		<!-- Chapter 6 -->
+	<section class="chapter" id="network">
+		<h2>
+			<span class="num">6</span>
+			<i data-lucide="globe" class="chapter-icon"></i>
+			Network
+		</h2>
+
+		<div class="chapter-content">
+			<p class="intro">
+				Make your Rust server accessible to players outside your home network.
+			</p>
+
+			<!-- How networking works -->
+			<div class="sub-section" id="network-basics">
+				<div class="sub-header">
+					<div class="sub-icon">
+						<i data-lucide="network"></i>
+					</div>
+					<div class="sub-header-text">
+						<h3>How it works</h3>
+						<p>
+							Understand the difference between your local IP and public IP
+							before configuring your router.
+						</p>
+					</div>
+				</div>
+
+				<div class="sub-body">
+					<div class="description">
+						Your computer normally has a <strong>local IP address</strong>.
+						This address is only used inside your home network.
+
+						<br><br>
+
+						For example:
+					</div>
+
+					<div class="command-box">
+						<code>192.168.1.25</code>
+					</div>
+
+					<div class="description">
+						Your router also has a
+						<strong>public IP address</strong>.
+						This is the address other people on the Internet can reach.
+
+						<br><br>
+
+						When someone outside your home tries to connect to your
+						Rust server, the connection first reaches your router.
+						The router then needs to know which computer should receive
+						that connection.
+
+						<br><br>
+
+						This is what <strong>port forwarding</strong> does.
+					</div>
+					<div class="network-flow">
+						<div class="network-flow-item">
+							<strong>Player</strong>
+							<span>Internet</span>
+						</div>
+
+						<div class="network-flow-arrow">→</div>
+
+						<div class="network-flow-item">
+							<strong>Your Public IP</strong>
+							<span>Port 28015</span>
+						</div>
+
+						<div class="network-flow-arrow">→</div>
+
+						<div class="network-flow-item">
+							<strong>Router</strong>
+							<span>Port forwarding</span>
+						</div>
+
+						<div class="network-flow-arrow">→</div>
+
+						<div class="network-flow-item">
+							<strong>192.168.1.25</strong>
+							<span>Your PC</span>
+						</div>
+
+						<div class="network-flow-arrow">→</div>
+
+						<div class="network-flow-item">
+							<strong>RustDedicated</strong>
+							<span>Port 28015</span>
+						</div>
+					</div>
+					<div class="notice info">
+						<strong>Important:</strong>
+						An address such as <code>192.168.1.25</code> is a
+						<strong>local/private IP</strong>. Players on the Internet
+						cannot normally connect directly to it.
+					</div>
+				</div>
+			</div>
+
+			<!-- Port forwarding -->
+			<div class="sub-section" id="network-port-forwarding">
+				<div class="sub-header">
+					<div class="sub-icon">
+						<i data-lucide="router"></i>
+					</div>
+					<div class="sub-header-text">
+						<h3>Port forwarding</h3>
+						<p>
+							Forward the Rust server port from your router to your PC.
+						</p>
+					</div>
+				</div>
+
+				<div class="sub-body">
+					<div class="notice">
+						<strong>Before you start:</strong>
+						Port forwarding is only needed if players outside your
+						local network need to connect to your server.
+
+						<br><br>
+
+						If you are on the same local
+						network, you can skip this section.
+					</div>
+
+					<div class="description">
+						Rust's default game port is
+						<strong>28015 UDP</strong>. This is the port players use
+						to connect to your server.
+
+						<br><br>
+
+						You can change the Rust port later, but for this guide
+						we will use the default:
+					</div>
+
+					<div class="command-box">
+						<code>28015 UDP</code>
+					</div>
+
+					<ol class="steps">
+						<li class="step">
+							<h3>Find your local IP address</h3>
+
+							<div class="description">
+								Your router needs to know which computer is running
+								the Rust server.
+
+								<br><br>
+
+								Open <strong>Command Prompt</strong> and run:
+							</div>
+
+							<div class="command-box">
+								<code>ipconfig</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+
+							<div class="description">
+								Look for:
+							</div>
+
+							<ul>
+								<li>
+									<strong>IPv4 Address</strong> —
+									your computer's local IP.
+								</li>
+								<li>
+									<strong>Default Gateway</strong> —
+									your router's local IP.
+								</li>
+							</ul>
+
+							<div class="description">
+								For example:
+							</div>
+
+							<pre class="tree">
+IPv4 Address . . . . . . . . . : 192.168.1.25
+Default Gateway . . . . . . . : 192.168.1.1</pre>
+
+							<div class="notice">
+								<strong>Do not copy these addresses blindly.</strong>
+								They are examples.
+
+								Use the values shown by <code>ipconfig</code>
+								on your own computer.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Open your router</h3>
+
+							<div class="description">
+								Copy the <strong>Default Gateway</strong> from
+								<code>ipconfig</code> and enter it into your
+								web browser's address bar.
+
+								<br><br>
+
+								Example:
+							</div>
+
+							<div class="command-box">
+								<code>192.168.1.1</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+
+							<div class="description">
+								This should open your router's administration page.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Log in to your router</h3>
+
+							<div class="description">
+								Your router will ask for an administrator username
+								and password.
+
+								<br><br>
+
+								Modern routers often have this information printed
+								on a sticker attached to the router.
+
+								<br><br>
+
+								The router administrator password is
+								<strong>not necessarily the same as your Wi-Fi password</strong>.
+							</div>
+
+							<div class="description">
+								Some older routers may use default credentials such as:
+							</div>
+
+							<pre class="tree">
+Username: admin
+Password: admin
+
+Username: admin
+Password: password
+
+Username: admin
+Password: (blank)</pre>
+
+							<div class="notice">
+								<strong>Important:</strong>
+								These are only examples.
+
+								There is no universal router username or password.
+
+								Modern routers may use a unique administrator password
+								or ask you to create one during the initial setup.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Find Port Forwarding</h3>
+
+							<div class="description">
+								Every router has a different administration interface.
+
+								Depending on the manufacturer, look for something
+								similar to:
+							</div>
+
+							<ul>
+								<li>Port Forwarding</li>
+								<li>Port Forward</li>
+								<li>NAT Forwarding</li>
+								<li>Virtual Server</li>
+								<li>NAT Rules</li>
+							</ul>
+
+							<div class="description">
+								If you cannot find it, search your router model
+								alongside <strong>"port forwarding"</strong>.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Create a port forwarding rule</h3>
+
+							<div class="description">
+								Create a new rule that sends incoming traffic on
+								port <code>28015</code> to your computer's local IP.
+
+								<br><br>
+
+								Using our example IP, the rule would look like:
+							</div>
+
+							<pre class="tree">
+Service name:   Rust Server
+External port:  28015
+Internal port:  28015
+Internal IP:    192.168.1.25
+Protocol:       UDP</pre>
+
+							<div class="notice">
+								<strong>Remember:</strong>
+								Replace <code>192.168.1.25</code> with the
+								IPv4 address from your own <code>ipconfig</code>.
+							</div>
+
+							<div class="description">
+								<strong>What do these fields mean?</strong>
+
+								<br><br>
+
+								<strong>External port</strong> is the port people
+								on the Internet connect to.
+
+								<br>
+
+								<strong>Internal port</strong> is the port your
+								Rust server listens on.
+
+								<br>
+
+								<strong>Internal IP</strong> is the local IP of
+								the computer running RustDedicated.
+
+								<br>
+
+								<strong>Protocol</strong> tells the router what
+								type of network traffic to forward.
+								Rust's game port uses UDP.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Save the rule</h3>
+
+							<div class="description">
+								Click <strong>Save</strong>, <strong>Apply</strong>,
+								or the equivalent button on your router.
+
+								<br><br>
+
+								Your router may briefly restart its network service.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Allow the server through Windows Firewall</h3>
+
+							<div class="description">
+								Your router is not the only thing that can block
+								the connection.
+
+								Windows Firewall can also prevent incoming traffic
+								from reaching RustDedicated.
+							</div>
+
+							<div class="notice">
+								<strong>Check Windows Firewall:</strong>
+								Make sure RustDedicated is allowed to communicate
+								through the firewall, or allow the Rust server's
+								<strong>UDP port 28015</strong>.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Find your public IP</h3>
+
+							<div class="description">
+								Players outside your home network need your
+								<strong>public IP</strong>.
+
+								<br><br>
+
+								You can find it by searching:
+							</div>
+
+							<div class="command-box">
+								<code>what is my IP</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+
+							<div class="notice">
+								<strong>Privacy:</strong>
+								Your public IP identifies your Internet connection.
+								Do not post it publicly unless you have a reason to.
+							</div>
+						</li>
+
+						<li class="step">
+							<h3>Connect from outside your network</h3>
+
+							<div class="description">
+								Once the server is running and port forwarding
+								is configured, a player outside your network can
+								connect using:
+							</div>
+
+							<div class="command-box">
+								<code>client.connect YOUR_PUBLIC_IP:28015</code>
+								<button onclick="copyCommand(this)">COPY</button>
+							</div>
+
+							<div class="description">
+								Replace <code>YOUR_PUBLIC_IP</code> with your actual
+								public IP address.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</div>
+
+			<!-- Local vs public -->
+			<div class="sub-section" id="network-local-public">
+				<div class="sub-header">
+					<div class="sub-icon">
+						<i data-lucide="wifi"></i>
+					</div>
+					<div class="sub-header-text">
+						<h3>Local vs public connection</h3>
+						<p>
+							Use the correct address depending on where the player is.
+						</p>
+					</div>
+				</div>
+
+				<div class="sub-body">
+					<div class="card">
+						<h3>Same PC</h3>
+
+						<div class="description">
+							If Rust and your server are running on the same computer:
+						</div>
+
+						<div class="command-box">
+							<code>client.connect localhost:28015</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+					</div>
+
+					<div class="card">
+						<h3>Same local network</h3>
+
+						<div class="description">
+							If another player is connected to the same router
+							as your server:
+						</div>
+
+						<div class="command-box">
+							<code>client.connect YOUR_LOCAL_IP:28015</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+
+						<div class="description">
+							For example:
+						</div>
+
+						<div class="command-box">
+							<code>client.connect 192.168.1.25:28015</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+					</div>
+
+					<div class="card" style="margin-bottom:0;">
+						<h3>Outside your network</h3>
+
+						<div class="description">
+							If the player is connecting over the Internet:
+						</div>
+
+						<div class="command-box">
+							<code>client.connect YOUR_PUBLIC_IP:28015</code>
+							<button onclick="copyCommand(this)">COPY</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- DHCP -->
+			<div class="sub-section" id="network-dhcp">
+				<div class="sub-header">
+					<div class="sub-icon">
+						<i data-lucide="lock-keyhole"></i>
+					</div>
+					<div class="sub-header-text">
+						<h3>Keep your local IP stable</h3>
+						<p>
+							Prevent your port forwarding rule from breaking later.
+						</p>
+					</div>
+				</div>
+
+				<div class="sub-body">
+					<div class="description">
+						Your router normally gives devices their local IP addresses
+						automatically using <strong>DHCP</strong>.
+
+						<br><br>
+
+						That means your server PC might have
+						<code>192.168.1.25</code> today but receive a different
+						address later.
+
+						<br><br>
+
+						If that happens, your router may still forward port
+						<code>28015</code> to the old IP.
+					</div>
+
+					<div class="notice">
+						<strong>Recommended:</strong>
+						Create a <strong>DHCP reservation</strong> for the PC
+						running your Rust server.
+
+						This tells your router to keep giving that computer
+						the same local IP address.
+					</div>
+
+					<div class="description">
+						The exact location of this setting depends on your router.
+						Look for names such as:
+					</div>
+
+					<ul>
+						<li>DHCP Reservation</li>
+						<li>Address Reservation</li>
+						<li>Static Lease</li>
+						<li>Reserved IP</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Troubleshooting -->
+			<div class="sub-section" id="network-troubleshooting">
+				<div class="sub-header">
+					<div class="sub-icon">
+						<i data-lucide="wrench"></i>
+					</div>
+					<div class="sub-header-text">
+						<h3>Troubleshooting</h3>
+						<p>
+							Things to check if players cannot connect.
+						</p>
+					</div>
+				</div>
+
+				<div class="sub-body">
+					<ul>
+						<li>
+							Make sure the Rust server is running.
+						</li>
+
+						<li>
+							Make sure <code>+server.port</code> matches the
+							port you forwarded.
+						</li>
+
+						<li>
+							Make sure the forwarded protocol is
+							<strong>UDP</strong>.
+						</li>
+
+						<li>
+							Make sure the internal IP is your server PC's
+							current local IP.
+						</li>
+
+						<li>
+							Check Windows Firewall.
+						</li>
+
+						<li>
+							Make sure outside players are using your
+							<strong>public IP</strong>, not your local IP.
+						</li>
+
+						<li>
+							Make sure you are testing from outside your home
+							network when testing the public IP.
+						</li>
+					</ul>
+
+					<div class="notice">
+						<strong>Still not working?</strong>
+
+						Some Internet providers use CGNAT or other network
+						configurations that prevent normal inbound port forwarding.
+
+						If your router does not have a public IP assigned to it,
+						normal port forwarding may not work.
+					</div>
+
+					<div class="notice info">
+						<strong>Start simple:</strong>
+						First make sure you can connect using
+						<code>localhost:28015</code>.
+
+						Then test from another device on your local network.
+
+						Only after that should you test the public IP.
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 	</div>
 	<footer id="footer">
 		<div class="footer-inner">
