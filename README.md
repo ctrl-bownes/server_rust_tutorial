@@ -4,8 +4,12 @@ A simple guide to help you set up and manage your own small **Rust dedicated ser
 
 ## For users
 
-Download this repository and run:
+Downloads:
+https://github.com/ctrl-bownes/server_rust_tutorial/releases
 
+Extract the .zip you downloaded.
+
+Start the batch file ``setup.bat`
 ```text
 setup.bat
 ```
