@@ -154,6 +154,6 @@ echo.>> select_version.bat
 echo :end>> select_version.bat
 echo pause>> select_version.bat
 echo.
-powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut('GUIDE.lnk'); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
+powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut('Full Guide Here - Open Me If Lost.lnk'); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
 echo Setup finished!
 pause
