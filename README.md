@@ -11,15 +11,8 @@ Extract the `.zip` you downloaded.
 
 Start the batch file `setup.bat`
 
-The setup script will prepare the guide and automatically open it in your browser.
-
-You can also open the guide manually via this route:
-
-```text
-guide/open_me.html
-```
-
-The complete guide is available inside the `guide` folder.
+The complete guide is available via the shortcut `Full Guide Here - Open Me If Lost` created
+inside your `rust_server` folder.
 
 ## What the guide covers
 
@@ -31,6 +24,7 @@ The complete guide is available inside the `guide` folder.
 * Server files and folders
 * Installing Oxide/uMod
 * Installing plugins
+* Port Forwarding
 
 ## Requirements
 
@@ -38,7 +32,7 @@ The complete guide is available inside the `guide` folder.
 * A web browser
 * Internet connection
 
-Internet access is required to download SteamCMD, the Rust dedicated server files, and optional plugins.
+Internet access is required to download SteamCMD, Install/Update Rust & Oxide.
 
 ## For developers
 
@@ -48,6 +42,7 @@ The guide is a simple HTML/CSS/JavaScript project.
 guide/
 ├── open_me.html
 ├── stylesheet.css
+├── lucide.min.js  #offline lucide library
 ├── script.js
 └── images/
 ```
