@@ -30,15 +30,31 @@ steamcmd +runscript rust_install.txt
 
 cd ../rust_server/
 
-
-echo @echo off> start_server.bat
+echo :: Double colons are used to add comments in a batch file.> start_server.bat
+echo :: Anything on a line starting with :: is ignored when the batch file runs.>> start_server.bat
+echo.>> start_server.bat
+echo :: You can use comments to disable commands you don't want to execute.>> start_server.bat
+echo :: This lets you keep the commands in the file in case you want to use them later.>> start_server.bat
+echo.>> start_server.bat
+echo :: For example, uncomment the 4 lines below if you want your server>> start_server.bat
+echo :: to automatically update when you run your start_server.bat script.>> start_server.bat
+echo.>> start_server.bat
+echo :: force_install_dir ../rust_server/server_files>> start_server.bat
+echo :: login anonymous>> start_server.bat
+echo :: app_update 258550 -beta public>> start_server.bat
+echo :: quit>> start_server.bat
+echo.>> start_server.bat
+echo.>> start_server.bat
+echo @echo off>> start_server.bat
+echo.>> start_server.bat
 echo cd ./server_files/>> start_server.bat
+echo.>> start_server.bat
 echo RustDedicated.exe ^^>> start_server.bat
 echo -batchmode ^^>> start_server.bat
 echo +server.level "Procedural Map" ^^>> start_server.bat
 echo +server.seed 2147483647 ^^>> start_server.bat
 echo +server.worldsize 1000 ^^>> start_server.bat
-echo +server.maxplayers 10 >> start_server.bat
+echo +server.maxplayers 10>> start_server.bat
 
 
 echo @echo off> update_oxide.bat
@@ -137,8 +153,7 @@ echo.>> select_version.bat
 
 echo :end>> select_version.bat
 echo pause>> select_version.bat
-
-start ../guide/open_me.html
 echo.
+powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut('Full Guide Here - Open Me If Lost.lnk'); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
 echo Setup finished!
 pause
