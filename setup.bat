@@ -2,8 +2,13 @@
 setlocal
 cd /d "%~dp0"
 
+rem ------------------------------------------------------------
+rem Install steamCmd.
+rem Running setup again will update steamCmd.
+rem ------------------------------------------------------------
+
 if not exist "steamcmd\steamcmd.exe" (
-    echo "SteamCMD" not found.
+    echo SteamCMD not found.
     echo Downloading SteamCMD...
 
     powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://client-update.steamstatic.com/installer/steamcmd.zip' -OutFile 'steamcmd.zip'"
@@ -24,45 +29,79 @@ if not exist "steamcmd\steamcmd.exe" (
     del /f /q "steamcmd.zip"
     echo SteamCMD installed.
 ) else (
-    echo SteamCMD already exists. Keeping it.
+    powershell -NoProfile -Command "Write-Host 'SteamCMD already exists. Keeping it.' -ForegroundColor DarkGray"
 )
 
+
 rem ------------------------------------------------------------
-rem Install Rust only when the server is not installed yet.
-rem Running setup again will NOT update/replace server_files.
+rem Install or update the Rust server.
+rem Running SteamCMD may modify files inside rust_server\server_files.
 rem ------------------------------------------------------------
 
 if not exist "rust_server\server_files\RustDedicated.exe" (
     echo.
-    echo "rust_server not found. Installing it...
+    powershell -NoProfile -Command "Write-Host 'Rust server not found. Installing it...' -ForegroundColor Cyan"
+    echo.
 
-    cd /d "%~dp0steamcmd"
-
-    echo @ShutdownOnFailedCommand 1 > rust_install.txt
-    echo @NoPromptForPassword 1 >> rust_install.txt
-    echo @sSteamCmdForcePlatformType windows >> rust_install.txt
-    echo force_install_dir ../rust_server/server_files >> rust_install.txt
-    echo login anonymous >> rust_install.txt
-    echo app_update 258550 -beta public >> rust_install.txt
-    echo quit >> rust_install.txt
-
-    steamcmd +runscript rust_install.txt
-
-    del /f /q rust_install.txt
-
-    cd /d "%~dp0"
-) else (
-    echo Rust server already exists. Keeping server_files unchanged.
+    goto install_rust
 )
+
+echo.
+powershell -NoProfile -Command "Write-Host 'Rust server is already installed.' -ForegroundColor Green"
+echo.
+
+powershell -NoProfile -Command "Write-Host 'WARNING:' -ForegroundColor Yellow"
+powershell -NoProfile -Command "Write-Host 'Updating the Rust server may modify or replace files inside:' -ForegroundColor Yellow"
+powershell -NoProfile -Command "Write-Host '  rust_server\server_files' -ForegroundColor Yellow"
+echo.
+powershell -NoProfile -Command "Write-Host 'This can affect custom server files, plugins, configurations,' -ForegroundColor Yellow"
+powershell -NoProfile -Command "Write-Host 'or other files stored inside the server installation.' -ForegroundColor Yellow"
+echo.
+
+choice /c YN /n /m "Do you want to check for and install a Rust server update? [Y/N]: "
+
+if errorlevel 2 (
+    echo.
+    powershell -NoProfile -Command "Write-Host 'Skipping Rust server update.' -ForegroundColor DarkGray"
+    echo.
+    goto rust_done
+)
+
+:install_rust
+
+echo.
+powershell -NoProfile -Command "Write-Host 'Preparing Rust server installation/update...' -ForegroundColor Cyan"
+echo.
+
+cd /d "%~dp0steamcmd"
+
+echo @ShutdownOnFailedCommand 1 > rust_install.txt
+echo @NoPromptForPassword 1 >> rust_install.txt
+echo @sSteamCmdForcePlatformType windows >> rust_install.txt
+echo force_install_dir ../rust_server/server_files >> rust_install.txt
+echo login anonymous >> rust_install.txt
+echo app_update 258550 -beta public >> rust_install.txt
+echo quit >> rust_install.txt
+
+steamcmd +runscript rust_install.txt
+
+del /f /q rust_install.txt
+
+:rust_done
 
 cd /d "%~dp0rust_server"
 
 rem ------------------------------------------------------------
-rem Never overwrite a user's start_server.bat.
+rem Never overwrite a file inside rust_server folder.
+rem Manually delete files to reset them with setup.bat!
+rem ------------------------------------------------------------
+
+rem ------------------------------------------------------------
+rem Create start_server.bat if not already exists.
 rem ------------------------------------------------------------
 
 if not exist "start_server.bat" (
-    echo Creating "start_server.bat" file
+    powershell -NoProfile -Command "Write-Host 'Creating "start_server.bat" file.' -ForegroundColor Green"
 
     > "start_server.bat" echo @echo off
     >> "start_server.bat" echo setlocal
@@ -105,15 +144,15 @@ if not exist "start_server.bat" (
     >> "start_server.bat" echo +server.maxplayers 10
     >> "start_server.bat" echo endlocal
 ) else (
-    echo start_server.bat already exists. Keeping it.
+    powershell -NoProfile -Command "Write-Host 'start_server.bat already exists. Keeping it.' -ForegroundColor DarkGray"
 )
 
 rem ------------------------------------------------------------
-rem Create helper scripts only if they do not already exist.
+rem Create update_oxide.bat if not already exists.
 rem ------------------------------------------------------------
 
 if not exist "update_oxide.bat" (
-    echo Creating "update_oxide.bat" file
+    powershell -NoProfile -Command "Write-Host 'Creating "update_oxide.bat" file.' -ForegroundColor Green"
 
     > "update_oxide.bat" echo @echo off
     >> "update_oxide.bat" echo setlocal
@@ -136,11 +175,15 @@ if not exist "update_oxide.bat" (
     >> "update_oxide.bat" echo endlocal
     >> "update_oxide.bat" echo pause
 ) else (
-    echo update_oxide.bat already exists. Keeping it.
+    powershell -NoProfile -Command "Write-Host 'update_oxide.bat already exists. Keeping it.' -ForegroundColor DarkGray"
 )
 
+rem ------------------------------------------------------------
+rem Create update_oxide.bat if not already exists.
+rem ------------------------------------------------------------
+
 if not exist "select_version.bat" (
-    echo Creating "select_version.bat" file
+    powershell -NoProfile -Command "Write-Host 'Creating "select_version.bat" file.' -ForegroundColor Green"
 
     > "select_version.bat" echo @echo off
     >> "select_version.bat" echo cd /d "%%~dp0..\steamcmd"
@@ -180,16 +223,20 @@ if not exist "select_version.bat" (
     >> "select_version.bat" echo :end
     >> "select_version.bat" echo pause
 ) else (
-    echo select_version.bat already exists. Keeping it.
+    powershell -NoProfile -Command "Write-Host 'select_version.bat already exists. Keeping it.' -ForegroundColor DarkGray"
 )
+
+rem ------------------------------------------------------------
+rem Create Full Guide Here - Open Me If Lost.lnk if not already exists.
+rem ------------------------------------------------------------
 
 cd /d "%~dp0rust_server"
 
 if not exist "Full Guide Here - Open Me If Lost.lnk" (
-    echo Creating "Full Guide Here - Open Me If Lost.lnk" file
+    powershell -NoProfile -Command "Write-Host 'Creating "Full Guide Here - Open Me If Lost.lnk" file' -ForegroundColor Green"
     powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut((Join-Path (Get-Location) 'Full Guide Here - Open Me If Lost.lnk')); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
 ) else (
-    echo "Full Guide Here - Open Me If Lost.lnk" already exists. Keeping it.
+    powershell -NoProfile -Command "Write-Host '"Full Guide Here - Open Me If Lost.lnk" already exists. Keeping it.' -ForegroundColor DarkGray"
 )
 
 echo.
