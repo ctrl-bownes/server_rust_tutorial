@@ -3,7 +3,7 @@ setlocal
 cd /d "%~dp0"
 
 if not exist "steamcmd\steamcmd.exe" (
-    echo SteamCMD not found.
+    echo "SteamCMD" not found.
     echo Downloading SteamCMD...
 
     powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://client-update.steamstatic.com/installer/steamcmd.zip' -OutFile 'steamcmd.zip'"
@@ -34,7 +34,7 @@ rem ------------------------------------------------------------
 
 if not exist "rust_server\server_files\RustDedicated.exe" (
     echo.
-    echo Rust server not found. Installing it...
+    echo "rust_server not found. Installing it...
 
     cd /d "%~dp0steamcmd"
 
@@ -62,7 +62,7 @@ rem Never overwrite a user's start_server.bat.
 rem ------------------------------------------------------------
 
 if not exist "start_server.bat" (
-    echo Creating start_server.bat...
+    echo Creating "start_server.bat" file
 
     > "start_server.bat" echo @echo off
     >> "start_server.bat" echo setlocal
@@ -75,7 +75,8 @@ if not exist "start_server.bat" (
     >> "start_server.bat" echo goto :start_server
     >> "start_server.bat" echo.
     >> "start_server.bat" echo :update_available
-    >> "start_server.bat" echo choice /c YN /n /m "An update is available. Install it now? [Y/N]: "
+    >> "start_server.bat" echo echo An update is available for the guide.
+    >> "start_server.bat" echo choice /c YN /n /m "Install it now? [Y/N]: "
     >> "start_server.bat" echo if errorlevel 2 goto :start_server
     >> "start_server.bat" echo if errorlevel 1 call "%%~dp0..\setup_updater.bat"
     >> "start_server.bat" echo.
@@ -112,6 +113,8 @@ rem Create helper scripts only if they do not already exist.
 rem ------------------------------------------------------------
 
 if not exist "update_oxide.bat" (
+    echo Creating "update_oxide.bat" file
+
     > "update_oxide.bat" echo @echo off
     >> "update_oxide.bat" echo setlocal
     >> "update_oxide.bat" echo echo ==============================
@@ -137,6 +140,8 @@ if not exist "update_oxide.bat" (
 )
 
 if not exist "select_version.bat" (
+    echo Creating "select_version.bat" file
+
     > "select_version.bat" echo @echo off
     >> "select_version.bat" echo cd /d "%%~dp0..\steamcmd"
     >> "select_version.bat" echo :menu
@@ -181,9 +186,10 @@ if not exist "select_version.bat" (
 cd /d "%~dp0rust_server"
 
 if not exist "Full Guide Here - Open Me If Lost.lnk" (
+    echo Creating "Full Guide Here - Open Me If Lost.lnk" file
     powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut((Join-Path (Get-Location) 'Full Guide Here - Open Me If Lost.lnk')); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
 ) else (
-    echo Guide_shortcut already exists. Keeping it.
+    echo "Full Guide Here - Open Me If Lost.lnk" already exists. Keeping it.
 )
 
 echo.
