@@ -2,16 +2,6 @@
 setlocal
 cd /d "%~dp0"
 
-if not exist ".version" (
-    echo ERROR: .version file not found.
-    pause
-    exit /b 1
-)
-
-set /p PACKAGE_VERSION=<.version
-
-echo Package version: %PACKAGE_VERSION%
-
 if not exist "steamcmd\steamcmd.exe" (
     echo SteamCMD not found.
     echo Downloading SteamCMD...
