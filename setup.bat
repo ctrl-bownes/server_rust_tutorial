@@ -114,7 +114,7 @@ if not exist "start_server.bat" (
     >> "start_server.bat" echo goto :start_server
     >> "start_server.bat" echo.
     >> "start_server.bat" echo :update_available
-    >> "start_server.bat" echo echo An update is available for the guide.
+    >> "start_server.bat" echo echo An update is available for the rust_server_guide.
     >> "start_server.bat" echo choice /c YN /n /m "Install it now? [Y/N]: "
     >> "start_server.bat" echo if errorlevel 2 goto :start_server
     >> "start_server.bat" echo if errorlevel 1 call "%%~dp0..\setup_updater.bat"
