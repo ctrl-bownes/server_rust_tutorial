@@ -409,10 +409,12 @@ echo.
 
 if exist "%TEMP_DIR%" rmdir /s /q "%TEMP_DIR%"
 
+pause
 exit /b 1
 
 
 :done
 
 endlocal
+pause
 exit /b 0
