@@ -37,7 +37,7 @@ will be created inside your `rust_server` folder.
 
 ## 🔄 Automatic Updates
 
-The package includes `setup_updater.bat`, which handles updates for the server package.
+The package includes `setup_updater.bat`, which handles updates for the setup package.
 
 Every time you launch:
 
