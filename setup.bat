@@ -173,19 +173,8 @@ if not exist "select_version.bat" (
 
 cd /d "%~dp0rust_server"
 
-rem ------------------------------------------------------------
-rem Initialize the package version only when it does not exist.
-rem ------------------------------------------------------------
-
-if not exist ".version" (
-    > ".version" echo %PACKAGE_VERSION%
-    echo Created .version: %PACKAGE_VERSION%
-) else (
-    echo .version already exists. Keeping it.
-)
-
 if not exist "Full Guide Here - Open Me If Lost.lnk" (
-    powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut((Join-Path (Get-Location) 'Full Guide Here - Open Me If Lost.lnk')); $sc.TargetPath=(Resolve-Path './guide/open_me.html').Path; $sc.Save()"
+    powershell -NoProfile -Command "$ws=New-Object -ComObject WScript.Shell; $sc=$ws.CreateShortcut((Join-Path (Get-Location) 'Full Guide Here - Open Me If Lost.lnk')); $sc.TargetPath=(Resolve-Path '../guide/open_me.html').Path; $sc.Save()"
 ) else (
     echo Guide_shortcut already exists. Keeping it.
 )
