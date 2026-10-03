@@ -51,11 +51,10 @@ If an update is available, you will be asked whether you want to install it.
 
 The updater only updates the **package files and guide**.
 
-It does **not** modify:
+It does **not** modify files inside:
 
 ```text
-rust_server\server_files
-start_server.bat
+rust_server/
 ```
 
 You can also run:
