@@ -50,7 +50,7 @@ if defined LOCAL_VERSION (
 ) else (
     echo Installed version: not found
 )
-echo Latest version:     %REMOTE_VERSION%
+echo Latest version: %REMOTE_VERSION%
 echo.
 
 if /I "%LOCAL_VERSION%"=="%REMOTE_VERSION%" (

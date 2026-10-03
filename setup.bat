@@ -71,11 +71,15 @@ if not exist "start_server.bat" (
     >> "start_server.bat" echo rem Check for a package update before starting the server.
     >> "start_server.bat" echo call "%%~dp0..\setup_updater.bat" --check
     >> "start_server.bat" echo if errorlevel 2 goto :start_server
-    >> "start_server.bat" echo if errorlevel 1 goto :start_server
+    >> "start_server.bat" echo if errorlevel 1 goto :update_available
+    >> "start_server.bat" echo goto :start_server
     >> "start_server.bat" echo.
+    >> "start_server.bat" echo :update_available
     >> "start_server.bat" echo choice /c YN /n /m "An update is available. Install it now? [Y/N]: "
     >> "start_server.bat" echo if errorlevel 2 goto :start_server
     >> "start_server.bat" echo if errorlevel 1 call "%%~dp0..\setup_updater.bat"
+    >> "start_server.bat" echo.
+    >> "start_server.bat" echo :start_server
     >> "start_server.bat" echo.
     >> "start_server.bat" echo :: Double colons are used to add comments in a batch file.
     >> "start_server.bat" echo :: Anything on a line starting with :: is ignored when the batch file runs.
@@ -91,7 +95,6 @@ if not exist "start_server.bat" (
     >> "start_server.bat" echo :: app_update 258550 -beta public
     >> "start_server.bat" echo :: quit
     >> "start_server.bat" echo.
-    >> "start_server.bat" echo :start_server
     >> "start_server.bat" echo cd /d "%%~dp0server_files"
     >> "start_server.bat" echo RustDedicated.exe ^^
     >> "start_server.bat" echo -batchmode ^^
