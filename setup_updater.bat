@@ -15,7 +15,7 @@ set "CYAN=%ESC%[96m"
 set "GRAY=%ESC%[90m"
 set "RESET=%ESC%[0m"
 
-set "REPO=ctrl-bownes/server_rust_tutorial"
+set "REPO=ctrl-bownes/simple-server-rust"
 set "API=https://api.github.com/repos/%REPO%/releases/latest"
 set "TEMP_DIR=%TEMP%\rust_server_package_update"
 set "ROOT_DIR=%~dp0"
