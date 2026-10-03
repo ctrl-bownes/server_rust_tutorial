@@ -11,7 +11,7 @@ A simple guide to help you set up and manage your own small **Rust dedicated ser
 
 ### 📥 Download
 
-You can download the latest version from the [GitHub Releases](https://github.com/ctrl-bownes/server_rust_tutorial/releases) page.
+You can download the latest version from the [GitHub Releases](https://github.com/ctrl-bownes/simple-server-rust/releases) page.
 
 > [!IMPORTANT]
 > Be sure to **extract the `.zip` file** before starting!
