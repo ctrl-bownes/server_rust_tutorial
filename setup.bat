@@ -12,24 +12,14 @@ if not exist "steamcmd\steamcmd.exe" (
     echo Downloading SteamCMD...
 
     powershell -NoProfile -Command "Invoke-WebRequest -Uri 'https://client-update.steamstatic.com/installer/steamcmd.zip' -OutFile 'steamcmd.zip'"
-    if errorlevel 1 (
-        echo ERROR: SteamCMD download failed.
-        pause
-        exit /b 1
-    )
 
     echo Extracting SteamCMD...
-    powershell -NoProfile -Command "New-Item -ItemType Directory -Force -Path 'steamcmd' | Out-Null; Expand-Archive -Path 'steamcmd.zip' -DestinationPath 'steamcmd' -Force"
-    if errorlevel 1 (
-        echo ERROR: SteamCMD extraction failed.
-        pause
-        exit /b 1
-    )
 
-    del /f /q "steamcmd.zip"
+    powershell -NoProfile -Command "New-Item -ItemType Directory -Force -Path 'steamcmd' | Out-Null; Expand-Archive -Path 'steamcmd.zip' -DestinationPath 'steamcmd' -Force"
+
+    del "steamcmd.zip"
+
     echo SteamCMD installed.
-) else (
-    powershell -NoProfile -Command "Write-Host 'SteamCMD already exists. Keeping it.' -ForegroundColor DarkGray"
 )
 
 
