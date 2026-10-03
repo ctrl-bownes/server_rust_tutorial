@@ -1,4 +1,4 @@
-# Rust Server Guide
+# Simple Server Rust
 
 A simple guide to help you set up and manage your own small **Rust dedicated server** on Windows.
 
